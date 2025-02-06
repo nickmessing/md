@@ -11,6 +11,10 @@
   "keywords": [],
   "author": "Nicolai Moraru <dot.nick.dot.messing@gmail.com>",
   "license": "MIT",
+  "engines": {
+    "pnpm": ">=9.0.0 <10.0.0",
+    "node": ">=22.0.0 <23.0.0"
+  },
   "devDependencies": {
     "@mdit/plugin-katex": "^0.16.7",
     "@tailwindcss/vite": "^4.0.3",
