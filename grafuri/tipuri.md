@@ -151,6 +151,44 @@ const grafCompl2 = {
     { source: '4', target: '5' },
   ],
 }
+
+const grafMuc1 = {
+  type: GraphType.Simple,
+  nodes: [
+    { id: '1', label: '1' },
+    { id: '2', label: '2' },
+    { id: '3', label: '3' },
+    { id: '4', label: '4' },
+  ],
+  edges: [
+    { source: '1', target: '2' },
+    { source: '1', target: '3' },
+    { source: '1', target: '4' },
+    { source: '2', target: '3' },
+    { source: '3', target: '4' },
+  ],
+}
+
+const grafMuc2 = {
+  type: GraphType.Simple,
+  nodes: [
+    { id: 'a', label: '1,3' },
+    { id: 'b', label: '2,3' },
+    { id: 'c', label: '3,4' },
+    { id: 'd', label: '1,2' },
+    { id: 'e', label: '1,4' },
+  ],
+  edges: [
+    { source: 'a', target: 'b' },
+    { source: 'a', target: 'c' },
+    { source: 'a', target: 'd' },
+    { source: 'a', target: 'e' },
+    { source: 'b', target: 'c' },
+    { source: 'b', target: 'd' },
+    { source: 'c', target: 'e' },
+    { source: 'd', target: 'e' },
+  ],
+}
 </script>
 
 # Tipuri de grafuri
@@ -286,3 +324,46 @@ $$
 </div>
 
 <p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(grafCompl2))}`">Editor</a></p>
+
+## Grafuri al muchiilor
+
+Dacă $G=(X, U)$ este un graf, atunci graful muchiilor lui $G$ este graful $L(G)=(U, U')$, unde $U'$ este mulțimea de vârfuri a grafului muchiilor. Două vârfuri din $U'$ sunt adiacente dacă și numai dacă muchiile corespunzătoare lor sunt adiacente în $G$. Se notează graful muchiilor lui $G$ prin $L(G)$.
+
+### Exemplu:
+
+$$
+G(X, U):
+\newline
+X = \{1, 2, 3, 4\}
+\newline
+U = \{(1, 2), (1, 3), (1, 4), (2, 3), (3, 4)\}
+$$
+
+<div class="h-[200px]">
+  <GraphVisualization :graph="grafMuc1" />
+</div>
+
+<p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(grafMuc1))}`">Editor</a></p>
+
+$$
+L(G)(U, U'):
+\newline
+U = \{(1, 2), (1, 3), (1, 4), (2, 3), (3, 4)\}
+\newline
+U' = \{ \newline
+  ((1, 3), (2, 3)), \newline
+  ((1, 3), (3, 4)), \newline
+  ((1, 3), (1, 2)), \newline
+  ((1, 3), (1, 4)), \newline
+  ((2, 3), (3, 4)), \newline
+  ((2, 3), (1, 2)), \newline
+  ((3, 4), (1, 4)), \newline
+  ((1, 2), (1, 4)) \newline
+\}
+$$
+
+<div class="h-[200px]">
+  <GraphVisualization :graph="grafMuc2" />
+</div>
+
+<p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(grafMuc2))}`">Editor</a></p>
