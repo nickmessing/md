@@ -13,7 +13,7 @@
   "license": "MIT",
   "engines": {
     "pnpm": "^10.2.0",
-    "node": ">=22.0.0 <23.0.0"
+    "node": "^22.13.1"
   },
   "devDependencies": {
     "@mdit/plugin-katex": "^0.16.7",
