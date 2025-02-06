@@ -68,7 +68,7 @@ $$
 
 ## Teorema 2 {#teorema-2}
 
-O [disjuncție elementară](#disjunctie-elementara) este [identic adevărată](identic-adevarat) atunci și numai atunci când ea conține cel puțin o variabilă împreună cu [negația](./algebra-propozitiilor.md#not) ei.
+O [disjuncție elementară](#disjunctie-elementara) este [identic adevărată](./algebra-propozitiilor.md#identic-adevarat) atunci și numai atunci când ea conține cel puțin o variabilă împreună cu [negația](./algebra-propozitiilor.md#not) ei.
 
 ### Exemple
 
