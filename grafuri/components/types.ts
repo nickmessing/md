@@ -1,3 +1,7 @@
+export enum GraphType {
+  Simple = 'Simple',
+}
+
 export type GraphNode = {
   id: string
   label: string
@@ -9,6 +13,7 @@ export type GraphEdge = {
 }
 
 export type Graph = {
+  type: GraphType.Simple
   nodes: GraphNode[]
   edges: GraphEdge[]
 }

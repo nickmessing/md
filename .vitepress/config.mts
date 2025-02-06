@@ -21,6 +21,11 @@ export default defineConfig({
         { text: 'Forme normale', link: '/logica/forme-normale' },
         { text: 'Constructor de tabele', link: '/logica/tabele' },
       ],
+      '/grafuri/': [
+        { text: 'Editor de grafuri', link: '/grafuri/editor' },
+        { text: 'Noțiuni', link: '/grafuri/notiuni' },
+        { text: 'Tipuri de grafuri', link: '/grafuri/tipuri' },
+      ],
     },
 
     socialLinks: [{ icon: 'github', link: 'https://github.com/vuejs/vitepress' }],

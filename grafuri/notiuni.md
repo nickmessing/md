@@ -1,5 +1,23 @@
 <script setup lang="ts">
+import { GraphType } from './components/types'
 import GraphVisualization from './components/GraphVisualization.vue'
+
+const graf = {
+  type: GraphType.Simple,
+  nodes: [
+    { id: '1', label: '1' },
+    { id: '2', label: '2' },
+    { id: '3', label: '3' },
+    { id: '4', label: '4' },
+    { id: '5', label: '5' },
+  ],
+  edges: [
+    { source: '1', target: '3' },
+    { source: '2', target: '3' },
+    { source: '2', target: '4' },
+    { source: '3', target: '4' },
+  ],
+}
 </script>
 
 # Noțiuni
@@ -61,22 +79,10 @@ $$
 Un vârf $x$ este incident cu o muchie $u$ dacă $x$ este o extremitate a muchiei $u$. În acest caz, spunem că muchia $u$ este incidentă cu vârful $x$.
 
 <div class="h-[300px]">
-  <GraphVisualization :graph="{
-    nodes: [
-      { id: '1', label: '1' },
-      { id: '2', label: '2' },
-      { id: '3', label: '3' },
-      { id: '4', label: '4' },
-      { id: '5', label: '5' },
-    ],
-    edges: [
-      { source: '1', target: '3' },
-      { source: '2', target: '3' },
-      { source: '2', target: '4' },
-      { source: '3', target: '4' },
-    ],
-  }" />
+  <GraphVisualization :graph="graf" />
 </div>
+
+<p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(graf))}`">Editor</a></p>
 
 $$
 \text{Muchii:} (1, 3); (2, 3); (2, 4); (3, 4)
@@ -93,120 +99,3 @@ Mulţimea tuturor vârfurilor grafului $G$ adiacente cu vârful $x$ se numeşte 
 $$
 N_g(x) = \{y \in X \mid x \sim y\}
 $$
-
-## Tipuri de grafuri
-
-### Graf vid
-
-Graf vid este graful fără de muchii. Se notează prin $O_n$.
-
-<div class="h-[200px]">
-  <GraphVisualization :graph="{
-    nodes: [
-      { id: '1', label: '1' },
-      { id: '2', label: '2' },
-      { id: '3', label: '3' },
-      { id: '4', label: '4' },
-      { id: '5', label: '5' },
-      { id: '6', label: '6' },
-    ],
-    edges: [],
-  }" />
-</div>
-
-### Graf trivial
-
-Graf trivial este graful pentru care $U = \emptyset$ și $|X| = 1$. Se notează prin $O_1$.
-
-<div class="h-[200px]">
-  <GraphVisualization :graph="{
-    nodes: [
-      { id: '1', label: '1' },
-    ],
-    edges: [],
-  }" />
-</div>
-
-### Graf complet
-
-Graf complet este graful, oricare două vârfuri ale căruia sunt adiacente. Se notează prin $K_n$.
-
-#### Exemple:
-
-$$
-K_3:
-$$
-
-<div class="h-[200px]">
-  <GraphVisualization :graph="{
-    nodes: [
-      { id: '1', label: '1' },
-      { id: '2', label: '2' },
-      { id: '3', label: '3' },
-    ],
-    edges: [
-      { source: '1', target: '2' },
-      { source: '1', target: '3' },
-      { source: '2', target: '3' },
-    ],
-  }" />
-</div>
-
-$$
-K_5:
-$$
-
-<div class="h-[200px]">
-  <GraphVisualization :graph="{
-    nodes: [
-      { id: '1', label: '1' },
-      { id: '2', label: '2' },
-      { id: '3', label: '3' },
-      { id: '4', label: '4' },
-      { id: '5', label: '5' },
-    ],
-    edges: [
-      { source: '1', target: '2' },
-      { source: '1', target: '3' },
-      { source: '1', target: '4' },
-      { source: '1', target: '5' },
-      { source: '2', target: '3' },
-      { source: '2', target: '4' },
-      { source: '2', target: '5' },
-      { source: '3', target: '4' },
-      { source: '3', target: '5' },
-      { source: '4', target: '5' },
-    ],
-  }" />
-</div>
-
-### Graf bipartit
-
-Graful, mulțimea de vârfuri a căruia poate fi divizată în două submulțimi $X_1$ și $X_2$ astfel încât fiecare muchie are o extremitate în $X_1$, iar alta extremitate în $X_2$, se numește graf bipartit. Se notează graful bipartit prin $G=(X_1, X_2, U)$.
-
-#### Exemple:
-
-$$
-G=(X_1, X_2, U)
-\newline
-X_1 = \{1, 2\}; X_2 = \{3, 4, 5\}
-\newline
-U = {(1, 4), (2, 3), (2, 5)}
-$$
-
-<div class="h-[200px]">
-  <GraphVisualization :graph="{
-    nodes: [
-      { id: '1', label: '1' },
-      { id: '2', label: '2' },
-      { id: '3', label: '3' },
-      { id: '4', label: '4' },
-      { id: '5', label: '5' },
-    ],
-    edges: [
-      { source: '1', target: '4' },
-      { source: '2', target: '3' },
-      { source: '2', target: '5' },
-    ],
-  }" />
-</div>
