@@ -12,7 +12,7 @@
   "author": "Nicolai Moraru <dot.nick.dot.messing@gmail.com>",
   "license": "MIT",
   "engines": {
-    "pnpm": "latest",
+    "npm": "11.x",
     "node": "22.x"
   },
   "devDependencies": {
