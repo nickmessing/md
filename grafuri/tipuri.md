@@ -144,11 +144,9 @@ const grafCompl2 = {
   ],
   edges: [
     { source: '1', target: '3' },
-    { source: '1', target: '5' },
-    { source: '2', target: '3' },
     { source: '2', target: '4' },
+    { source: '2', target: '5' },
     { source: '3', target: '5' },
-    { source: '4', target: '5' },
   ],
 }
 
