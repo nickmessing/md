@@ -75,6 +75,82 @@ const grafBipartit = {
     { source: '2', target: '5' },
   ],
 }
+
+const grafBipartit3_3 = {
+  type: GraphType.Simple,
+  nodes: [
+    { id: '1', label: '1' },
+    { id: '2', label: '2' },
+    { id: '3', label: '3' },
+    { id: '4', label: '4' },
+    { id: '5', label: '5' },
+    { id: '6', label: '6' },
+  ],
+  edges: [
+    { source: '1', target: '4' },
+    { source: '1', target: '5' },
+    { source: '1', target: '6' },
+    { source: '2', target: '4' },
+    { source: '2', target: '5' },
+    { source: '2', target: '6' },
+    { source: '3', target: '4' },
+    { source: '3', target: '5' },
+    { source: '3', target: '6' },
+  ],
+}
+
+const grafBipartit1_3 = {
+  type: GraphType.Simple,
+  nodes: [
+    { id: '1', label: '1' },
+    { id: '2', label: '2' },
+    { id: '3', label: '3' },
+    { id: '4', label: '4' },
+  ],
+  edges: [
+    { source: '1', target: '2' },
+    { source: '1', target: '3' },
+    { source: '1', target: '4' },
+  ],
+}
+
+const grafCompl1 = {
+  type: GraphType.Simple,
+  nodes: [
+    { id: '1', label: '1' },
+    { id: '2', label: '2' },
+    { id: '3', label: '3' },
+    { id: '4', label: '4' },
+    { id: '5', label: '5' },
+  ],
+  edges: [
+    { source: '1', target: '2' },
+    { source: '1', target: '4' },
+    { source: '1', target: '5' },
+    { source: '2', target: '3' },
+    { source: '3', target: '4' },
+    { source: '4', target: '5' },
+  ],
+}
+
+const grafCompl2 = {
+  type: GraphType.Simple,
+  nodes: [
+    { id: '1', label: '1' },
+    { id: '2', label: '2' },
+    { id: '3', label: '3' },
+    { id: '4', label: '4' },
+    { id: '5', label: '5' },
+  ],
+  edges: [
+    { source: '1', target: '3' },
+    { source: '1', target: '5' },
+    { source: '2', target: '3' },
+    { source: '2', target: '4' },
+    { source: '3', target: '5' },
+    { source: '4', target: '5' },
+  ],
+}
 </script>
 
 # Tipuri de grafuri
@@ -144,3 +220,69 @@ $$
 </div>
 
 <p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(grafBipartit))}`">Editor</a></p>
+
+## Graf bipartit complet
+
+Dacă în graful bipartit fiecare vârf din $X_1$ este adiacent cu toate vârfurile din $X_2$, atunci avem un graf bipartit complet. Notație $K_{p,q}$. $m(K_{p,q})=|X_1| \cdot |X_2|$.
+
+### Exemple:
+
+$$
+K_{3,3}:
+$$
+
+<div class="h-[200px]">
+  <GraphVisualization :graph="grafBipartit3_3" />
+</div>
+
+<p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(grafBipartit3_3))}`">Editor</a></p>
+
+$$
+K_{1,3}:
+$$
+
+<div class="h-[200px]">
+  <GraphVisualization :graph="grafBipartit1_3" />
+</div>
+
+<p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(grafBipartit1_3))}`">Editor</a></p>
+
+#### Notă
+
+Grafurile $K_{1,n}$ se mai numesc stele.
+
+<!-- Graf complementar al grafului G este graful, cu aceeaşi mulţime de
+vârfui X, în care două vârfuri sunt adiacente dacă şi numai dacă ele nu
+sunt adiacente în G. Se notează graful complementar prin . -->
+
+## Grafuri complementare
+
+Dacă $G=(X, U)$ este un graf, atunci graful complementar al lui $G$ este graful $G'=(X, U')$, unde $U' = \{(x, y) \in X \times X | (x, y) \notin U\}$. Se notează graful complementar al lui $G$ prin $\overline{G}$.
+
+### Exemplu:
+
+$$
+G(X, U):
+\newline
+X = \{1, 2, 3, 4, 5\}
+\newline
+U = \{(1, 2), (1, 4), (1, 5), (2, 3), (3, 4), (4, 5)\}
+$$
+
+<div class="h-[200px]">
+  <GraphVisualization :graph="grafCompl1" />
+</div>
+
+<p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(grafCompl1))}`">Editor</a></p>
+
+$$
+\overline{G}(X, U'):
+\newline
+U' = \{(1, 3), (2, 4), (2, 5), (3, 5)\}
+$$
+
+<div class="h-[200px]">
+  <GraphVisualization :graph="grafCompl2" />
+</div>
+
+<p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(grafCompl2))}`">Editor</a></p>
