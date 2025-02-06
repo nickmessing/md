@@ -189,6 +189,52 @@ const grafMuc2 = {
     { source: 'd', target: 'e' },
   ],
 }
+
+const grafIzomorf1 = {
+  type: GraphType.Simple,
+  nodes: [
+    { id: '1', label: '1' },
+    { id: '2', label: '2' },
+    { id: '3', label: '3' },
+    { id: '4', label: '4' },
+    { id: '5', label: '5' },
+    { id: '6', label: '6' },
+  ],
+  edges: [
+    { source: '1', target: '4' },
+    { source: '1', target: '5' },
+    { source: '1', target: '6' },
+    { source: '2', target: '4' },
+    { source: '2', target: '5' },
+    { source: '2', target: '6' },
+    { source: '3', target: '4' },
+    { source: '3', target: '5' },
+    { source: '3', target: '6' },
+  ],
+}
+
+const grafIzomorf2 = {
+  type: GraphType.Simple,
+  nodes: [
+    { id: 'a', label: 'a' },
+    { id: 'b', label: 'b' },
+    { id: 'c', label: 'c' },
+    { id: 'd', label: 'd' },
+    { id: 'e', label: 'e' },
+    { id: 'f', label: 'f' },
+  ],
+  edges: [
+    { source: 'a', target: 'b' },
+    { source: 'a', target: 'd' },
+    { source: 'a', target: 'f' },
+    { source: 'c', target: 'b' },
+    { source: 'c', target: 'd' },
+    { source: 'c', target: 'f' },
+    { source: 'e', target: 'b' },
+    { source: 'e', target: 'd' },
+    { source: 'e', target: 'f' },
+  ],
+}
 </script>
 
 # Tipuri de grafuri
@@ -367,3 +413,43 @@ $$
 </div>
 
 <p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(grafMuc2))}`">Editor</a></p>
+
+## Grafuri izomorfe
+
+Fie $G=(X, U)$ și $H=(Y, V)$ două grafuri. O bijecție $\varphi: X \to Y$ se numește izomorfism al grafurilor $G$ și $H$ dacă pentru $\forall u, v \in X$ imaginile lor $\varphi(u), \varphi(v) \in Y$ sunt adiacente (în $H$) dacă și numai dacă vârfurile $u$ și $v$ sunt adiacente în $G$. Dacă există un asemenea izomorfism, se spune că grafurile $G$ și $H$ sunt izomorfe. Se notează $G \cong H$.
+
+### Exemplu:
+
+$$
+G(X, U):
+\newline
+X = \{1, 2, 3, 4, 5, 6\}
+\newline
+U = \{ \newline
+(1, 4), (1, 5), (1, 6), (2, 4), (2, 5), \newline
+(2, 6), (3, 4), (3, 5), (3, 6) \newline
+\}
+$$
+
+<div class="h-[200px]">
+  <GraphVisualization :graph="grafIzomorf1" />
+</div>
+
+<p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(grafIzomorf1))}`">Editor</a></p>
+
+$$
+H(Y, V):
+\newline
+Y = \{a, b, c, d, e, f\}
+\newline
+V = \{ \newline
+(a, b), (a, c), (a, d), (b, c), (b, d), \newline
+(b, e), (c, e), (d, e), (d, f) \newline
+\}
+$$
+
+<div class="h-[200px]">
+  <GraphVisualization :graph="grafIzomorf2" />
+</div>
+
+<p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(grafIzomorf2))}`">Editor</a></p>
