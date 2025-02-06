@@ -1,0 +1,8 @@
+export const not = (value: string) => (value === '0' ? '1' : value === '1' ? '0' : 'ERR')
+export const and = (a: string, b: string) => (a === '1' && b === '1' ? '1' : '0')
+export const or = (a: string, b: string) => (a === '1' || b === '1' ? '1' : '0')
+export const implies = (a: string, b: string) => (a === '1' && b === '0' ? '0' : '1')
+export const iff = (a: string, b: string) => (a === b ? '1' : '0')
+export const nand = (a: string, b: string) => not(and(a, b))
+export const nor = (a: string, b: string) => not(or(a, b))
+export const xor = (a: string, b: string) => not(iff(a, b))
