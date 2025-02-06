@@ -118,7 +118,7 @@ watch(
 
 const draggingElement = shallowRef<DraggingState>()
 
-function handleMouseDown(event: MouseEvent, node: GraphNode) {
+function handleMouseDown(event: MouseEvent | TouchEvent, node: GraphNode) {
   const target = event.target as SVGElement
   const nodeGroup = target.closest('g')
   if (!nodeGroup || !svg.value) {
@@ -129,8 +129,11 @@ function handleMouseDown(event: MouseEvent, node: GraphNode) {
 
   const boundingClientRect = nodeGroup.getBoundingClientRect()
 
-  const cursorX = event.clientX - boundingClientRect.left
-  const cursorY = event.clientY - boundingClientRect.top
+  const clientX = 'clientX' in event ? event.clientX : event.touches[0].clientX
+  const clientY = 'clientY' in event ? event.clientY : event.touches[0].clientY
+
+  const cursorX = clientX - boundingClientRect.left
+  const cursorY = clientY - boundingClientRect.top
 
   const cursorOffset: BiDimensionalCoordinates = {
     x: cursorX - NODE_RADIUS,
@@ -154,8 +157,9 @@ function handleMouseUp() {
 }
 
 useEventListener('mouseup', handleMouseUp)
+useEventListener('touchend', handleMouseUp)
 
-function handleMouseMove(event: MouseEvent) {
+function handleMouseMove(event: MouseEvent | TouchEvent) {
   if (!draggingElement.value || !svg.value) {
     return
   }
@@ -164,8 +168,11 @@ function handleMouseMove(event: MouseEvent) {
 
   const svgRect = svg.value.getBoundingClientRect()
 
-  const x = event.clientX - svgRect.left - cursorOffset.x
-  const y = event.clientY - svgRect.top - cursorOffset.y
+  const clientX = 'clientX' in event ? event.clientX : event.touches[0].clientX
+  const clientY = 'clientY' in event ? event.clientY : event.touches[0].clientY
+
+  const x = clientX - svgRect.left - cursorOffset.x
+  const y = clientY - svgRect.top - cursorOffset.y
 
   const nodesArray = simulation.nodes()
   const nodeInSimulation = nodesArray.find(n => n.meta.id === node.id)
@@ -182,7 +189,12 @@ function handleMouseMove(event: MouseEvent) {
 </script>
 
 <template>
-  <svg ref="svgElement" class="h-full w-full bg-gray-50 rounded-xl" @mousemove="handleMouseMove">
+  <svg
+    ref="svgElement"
+    class="h-full w-full bg-gray-50 rounded-xl"
+    @mousemove="handleMouseMove"
+    @touchmove.prevent="handleMouseMove"
+  >
     <g>
       <line
         v-for="(link, index) in linksToRender"
@@ -200,6 +212,7 @@ function handleMouseMove(event: MouseEvent) {
       :key="index"
       class="cursor-move"
       @mousedown="handleMouseDown($event, node.meta)"
+      @touchstart.prevent="handleMouseDown($event, node.meta)"
     >
       <circle
         :cx="node.x"
