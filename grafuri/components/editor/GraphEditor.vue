@@ -33,7 +33,7 @@ const tabs = [
 </script>
 
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col h-full">
     <AGTabs v-model="activeTab" :tabs="tabs" class="shrink-0" />
     <div class="grow overflow-auto p-4">
       <GraphEditorNodes v-if="activeTab === ActiveTab.Nodes" v-model="graph" />
