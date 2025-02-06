@@ -24,8 +24,17 @@ export function buildKatexString(expression: ExpressionNode, isBracketSetOmitted
       }
     }
     if (isBinaryOperation(expression.operation)) {
-      const left = buildKatexString(expression.operation.left)
-      const right = buildKatexString(expression.operation.right)
+      const isOrderIndependent = ['and', 'or'].includes(expression.operation.operator)
+      const isLeftBracketOmitted =
+        isOperationNode(expression.operation.left) &&
+        expression.operation.left.operation.operator === expression.operation.operator &&
+        isOrderIndependent
+      const isRightBracketOmitted =
+        isOperationNode(expression.operation.right) &&
+        expression.operation.right.operation.operator === expression.operation.operator &&
+        isOrderIndependent
+      const left = buildKatexString(expression.operation.left, isLeftBracketOmitted)
+      const right = buildKatexString(expression.operation.right, isRightBracketOmitted)
       let expressionString
 
       switch (expression.operation.operator) {
