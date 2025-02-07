@@ -314,3 +314,21 @@ export const multigraf: Graph = {
     { source: '3', target: '5' },
   ],
 }
+
+export const pseudoGraf: Graph = {
+  type: GraphType.Pseudo,
+  nodes: [
+    { id: '1', label: '1' },
+    { id: '2', label: '2' },
+    { id: '3', label: '3' },
+    { id: '4', label: '4' },
+  ],
+  edges: [
+    { source: '1', target: '1' },
+    { source: '1', target: '2' },
+    { source: '2', target: '3' },
+    { source: '2', target: '4' },
+    { source: '2', target: '4' },
+    { source: '3', target: '3' },
+  ],
+}

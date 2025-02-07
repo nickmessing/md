@@ -61,7 +61,9 @@ const target = computed({
     <div v-if="sourceNode && targetNode" class="grid grow grid-cols-2 grid-rows-1 gap-2">
       <div>
         <select v-model="source" class="w-full" :disabled="sourceAlternatives.length === 0">
-          <option v-if="graphType !== GraphType.Multi" :value="sourceNode.id">{{ sourceNode.label }}</option>
+          <option v-if="![GraphType.Multi, GraphType.Pseudo].includes(graphType)" :value="sourceNode.id">
+            {{ sourceNode.label }}
+          </option>
           <option v-for="nodeId in sourceAlternatives" :key="nodeId" :value="nodeId">
             {{ nodes.get(nodeId)?.label }}
           </option>
@@ -69,7 +71,9 @@ const target = computed({
       </div>
       <div>
         <select v-model="target" class="w-full" :disabled="targetAlternatives.length === 0">
-          <option v-if="graphType !== GraphType.Multi" :value="targetNode.id">{{ targetNode.label }}</option>
+          <option v-if="![GraphType.Multi, GraphType.Pseudo].includes(graphType)" :value="targetNode.id">
+            {{ targetNode.label }}
+          </option>
           <option v-for="nodeId in targetAlternatives" :key="nodeId" :value="nodeId">
             {{ nodes.get(nodeId)?.label }}
           </option>

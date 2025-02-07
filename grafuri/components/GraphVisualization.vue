@@ -85,14 +85,15 @@ const nodesToRender = shallowRef<Datum[]>(simulation.nodes())
 const mappedNodes = computed(() => new Map(nodesToRender.value.map(node => [node.meta.id, node])))
 
 const linksToRender = computed(() => {
-  const lines = [] as Array<{
+  const lines: {
     x1: number
     y1: number
     x2: number
     y2: number
     source: Datum
     target: Datum
-  }>
+    link?: string
+  }[] = []
 
   for (const { edge, count } of countedEdges.value) {
     const source = mappedNodes.value.get(edge.source)
@@ -110,6 +111,14 @@ const linksToRender = computed(() => {
     const dist = Math.sqrt(dx * dx + dy * dy)
 
     if (dist === 0) {
+      const arcRadius = NODE_RADIUS + 30
+      const link = `M ${sx} ${sy}
+          C ${sx - arcRadius} ${sy - arcRadius},
+            ${sx + arcRadius} ${sy - arcRadius},
+            ${sx} ${sy}`
+
+      lines.push({ x1: sx, y1: sy, x2: tx, y2: ty, source, target, link })
+
       continue
     }
 
@@ -266,17 +275,11 @@ function handleMouseMove(event: MouseEvent | TouchEvent) {
     @mousemove="handleMouseMove"
     @touchmove.prevent="handleMouseMove"
   >
-    <g v-if="graph.type === GraphType.Simple || graph.type === GraphType.Multi">
-      <line
-        v-for="(link, index) in linksToRender"
-        :key="index"
-        :x1="link.x1"
-        :y1="link.y1"
-        :x2="link.x2"
-        :y2="link.y2"
-        stroke="black"
-        stroke-width="2"
-      />
+    <g v-if="[GraphType.Simple, GraphType.Multi, GraphType.Pseudo].includes(graph.type)">
+      <template v-for="(link, index) in linksToRender" :key="index">
+        <path v-if="link.link" :d="link.link" stroke="black" fill="transparent" />
+        <line v-else :x1="link.x1" :y1="link.y1" :x2="link.x2" :y2="link.y2" stroke="black" stroke-width="2" />
+      </template>
     </g>
     <g v-else-if="graph.type === GraphType.Directed">
       <marker

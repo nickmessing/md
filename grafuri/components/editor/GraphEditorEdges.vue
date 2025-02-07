@@ -10,8 +10,12 @@ const allPossibleEdges = computed<GraphEdgePossibility[]>(() =>
   graph.value.nodes
     .flatMap((node, index) =>
       graph.value.nodes.map((otherNode, otherIndex) => {
-        if (node.id === otherNode.id || (graph.value.type === GraphType.Directed ? false : index >= otherIndex)) {
-          return null
+        if (graph.value.type !== GraphType.Pseudo && node.id === otherNode.id) {
+          return
+        }
+
+        if (graph.value.type !== GraphType.Directed && index > otherIndex) {
+          return
         }
 
         const edge = graph.value.edges.find(edge => {
@@ -32,7 +36,7 @@ const allPossibleEdges = computed<GraphEdgePossibility[]>(() =>
 )
 
 const edgesNotInGraph = computed(() =>
-  graph.value.type === GraphType.Multi
+  [GraphType.Multi, GraphType.Pseudo].includes(graph.value.type)
     ? allPossibleEdges.value
     : allPossibleEdges.value.filter(edge => !edge.isPresent),
 )
@@ -60,10 +64,9 @@ function setEdges(newEdges: GraphEdge[]) {
 }
 
 function addEdge() {
-  const possibleEdge =
-    graph.value.type === GraphType.Multi
-      ? allPossibleEdges.value.at(-1)
-      : allPossibleEdges.value.find(edge => !edge.isPresent)
+  const possibleEdge = [GraphType.Multi, GraphType.Pseudo].includes(graph.value.type)
+    ? allPossibleEdges.value.at(-1)
+    : allPossibleEdges.value.find(edge => !edge.isPresent)
   if (!possibleEdge) {
     return
   }

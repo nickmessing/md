@@ -19,6 +19,7 @@ import {
   grafOrientat2,
   grafOrientat3,
   multigraf,
+  pseudoGraf,
 } from "./tipuri.ts";
 </script>
 
@@ -331,3 +332,44 @@ $$
 </div>
 
 <p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(multigraf))}`">Editor</a></p>
+
+## Pseudograf
+
+Pseudograful este multigraful care conține cel puțin o muchie, extremitățile căreia coincid (**buclă**).
+
+<!-- export const pseudoGraf: Graph = {
+  type: GraphType.Pseudo,
+  nodes: [
+    { id: '1', label: '1' },
+    { id: '2', label: '2' },
+    { id: '3', label: '3' },
+    { id: '4', label: '4' },
+  ],
+  edges: [
+    { source: '1', target: '1' },
+    { source: '1', target: '2' },
+    { source: '2', target: '3' },
+    { source: '2', target: '4' },
+    { source: '2', target: '4' },
+    { source: '3', target: '3' },
+  ],
+} -->
+
+### Exemplu:
+
+$$
+G(X, U):
+\newline
+X = \{1, 2, 3, 4\}
+\newline
+U = \{ \newline
+(1, 1), (1, 2), (2, 3), \newline
+(2, 4),(2, 4), (3, 3) \newline
+\}
+$$
+
+<div class="h-[200px]">
+  <GraphVisualization :graph="pseudoGraf" />
+</div>
+
+<p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(pseudoGraf))}`">Editor</a></p>
