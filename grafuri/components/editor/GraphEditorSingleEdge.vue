@@ -2,9 +2,14 @@
 import { type GraphEdge, type GraphEdgePossibility, type GraphNode } from '../types'
 import { computed } from 'vue'
 
-const { possibleEdges, nodes } = defineProps<{
+const {
+  possibleEdges,
+  nodes,
+  isOriented = false,
+} = defineProps<{
   possibleEdges: GraphEdgePossibility[]
   nodes: Map<string, GraphNode>
+  isOriented?: boolean
 }>()
 
 const edge = defineModel<GraphEdge>({ required: true })
@@ -20,14 +25,18 @@ const sourceAlternatives = computed(() => [
   ...possibleEdges
     .filter(possibleEdge => possibleEdge.target === edge.value.target)
     .map(possibleEdge => possibleEdge.source),
-  ...possibleEdges
-    .filter(possibleEdge => possibleEdge.source === edge.value.target)
-    .map(possibleEdge => possibleEdge.target),
+  ...(isOriented
+    ? []
+    : possibleEdges
+        .filter(possibleEdge => possibleEdge.source === edge.value.target)
+        .map(possibleEdge => possibleEdge.target)),
 ])
 const targetAlternatives = computed(() => [
-  ...possibleEdges
-    .filter(possibleEdge => possibleEdge.target === edge.value.source)
-    .map(possibleEdge => possibleEdge.source),
+  ...(isOriented
+    ? []
+    : possibleEdges
+        .filter(possibleEdge => possibleEdge.target === edge.value.source)
+        .map(possibleEdge => possibleEdge.source)),
   ...possibleEdges
     .filter(possibleEdge => possibleEdge.source === edge.value.source)
     .map(possibleEdge => possibleEdge.target),

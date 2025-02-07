@@ -100,6 +100,7 @@ function removeEdge(index: number) {
             :modelValue="edge"
             :nodes="mappedNodes"
             :possibleEdges="edgesNotInGraph"
+            :isOriented="graph.type === GraphType.Directed"
             @update:modelValue="updateEdge(index, $event)"
             @removeClick="removeEdge(index)"
           />
