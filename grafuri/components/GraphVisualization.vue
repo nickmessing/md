@@ -1,5 +1,12 @@
 <script setup lang="ts">
-import { GraphType, type BiDimensionalCoordinates, type DraggingState, type Graph, type GraphNode } from './types'
+import {
+  GraphEdge,
+  GraphType,
+  type BiDimensionalCoordinates,
+  type DraggingState,
+  type Graph,
+  type GraphNode,
+} from './types'
 import { useElementSize, useEventListener } from '@vueuse/core'
 import { computed, nextTick, shallowRef, useTemplateRef, watch } from 'vue'
 import * as d3 from 'd3'
@@ -16,10 +23,30 @@ const { width, height } = useElementSize(svg)
 
 type Datum = d3.SimulationNodeDatum & { meta: GraphNode }
 
+type CountedEdge = {
+  edge: GraphEdge
+  count: number
+}
+
+const countedEdges = computed(() => {
+  const result: CountedEdge[] = []
+
+  for (const edge of graph.edges) {
+    const existingEdge = result.find(e => e.edge.source === edge.source && e.edge.target === edge.target)
+    if (existingEdge) {
+      existingEdge.count++
+    } else {
+      result.push({ edge, count: 1 })
+    }
+  }
+
+  return result
+})
+
 function createLinkForce() {
   return d3
     .forceLink<Datum, d3.SimulationLinkDatum<Datum>>([
-      ...graph.edges.map(edge => ({ source: edge.source, target: edge.target })),
+      ...countedEdges.value.map(({ edge }) => ({ source: edge.source, target: edge.target })),
     ])
     .id(d => d.meta.id)
     .distance(120)
@@ -58,45 +85,59 @@ const nodesToRender = shallowRef<Datum[]>(simulation.nodes())
 const mappedNodes = computed(() => new Map(nodesToRender.value.map(node => [node.meta.id, node])))
 
 const linksToRender = computed(() => {
-  return graph.edges.map(edge => {
+  const lines = [] as Array<{
+    x1: number
+    y1: number
+    x2: number
+    y2: number
+    source: Datum
+    target: Datum
+  }>
+
+  for (const { edge, count } of countedEdges.value) {
     const source = mappedNodes.value.get(edge.source)
     const target = mappedNodes.value.get(edge.target)
-
     if (!source || !target) {
       throw new Error(`Invalid edge ${edge.source} -> ${edge.target}`)
     }
 
-    const targetX = target.x ?? 0
-    const targetY = target.y ?? 0
-    const sourceX = source.x ?? 0
-    const sourceY = source.y ?? 0
+    const sx = source.x ?? 0
+    const sy = source.y ?? 0
+    const tx = target.x ?? 0
+    const ty = target.y ?? 0
+    const dx = tx - sx
+    const dy = ty - sy
+    const dist = Math.sqrt(dx * dx + dy * dy)
 
-    const dx = targetX - sourceX
-    const dy = targetY - sourceY
-    const distance = Math.sqrt(dx * dx + dy * dy)
-
-    // Avoid dividing by zero if both nodes share the same position
-    if (distance === 0) {
-      return {
-        x1: sourceX,
-        y1: sourceY,
-        x2: targetX,
-        y2: targetY,
-        source,
-        target,
-      }
+    if (dist === 0) {
+      continue
     }
 
-    const offsetX = (dx / distance) * NODE_RADIUS
-    const offsetY = (dy / distance) * NODE_RADIUS
+    const offsetX = graph.type === GraphType.Directed ? (dx / dist) * NODE_RADIUS : 0
+    const offsetY = graph.type === GraphType.Directed ? (dy / dist) * NODE_RADIUS : 0
 
-    const x1 = sourceX + offsetX
-    const y1 = sourceY + offsetY
-    const x2 = targetX - offsetX
-    const y2 = targetY - offsetY
+    const baseX1 = sx + offsetX
+    const baseY1 = sy + offsetY
+    const baseX2 = tx - offsetX
+    const baseY2 = ty - offsetY
 
-    return { x1, y1, x2, y2, source, target }
-  })
+    const perpX = -dy / dist
+    const perpY = dx / dist
+
+    const spacing = (NODE_RADIUS * 2) / count
+    for (let i = 0; i < count; i++) {
+      const offsetFromCenter = (i - (count - 1) / 2) * spacing
+
+      const x1 = baseX1 + perpX * offsetFromCenter
+      const y1 = baseY1 + perpY * offsetFromCenter
+      const x2 = baseX2 + perpX * offsetFromCenter
+      const y2 = baseY2 + perpY * offsetFromCenter
+
+      lines.push({ x1, y1, x2, y2, source, target })
+    }
+  }
+
+  return lines
 })
 
 function ticked() {
@@ -225,7 +266,7 @@ function handleMouseMove(event: MouseEvent | TouchEvent) {
     @mousemove="handleMouseMove"
     @touchmove.prevent="handleMouseMove"
   >
-    <g v-if="graph.type === GraphType.Simple">
+    <g v-if="graph.type === GraphType.Simple || graph.type === GraphType.Multi">
       <line
         v-for="(link, index) in linksToRender"
         :key="index"

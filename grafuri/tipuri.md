@@ -18,6 +18,7 @@ import {
   grafOrientat1,
   grafOrientat2,
   grafOrientat3,
+  multigraf,
 } from "./tipuri.ts";
 </script>
 
@@ -244,6 +245,12 @@ Perechea de mulțimi $G=(X, A)$, unde $X$ este o mulțime nevidă de elemente di
 
 Mulțimea $A$ se numește mulțimea arcelor grafului $G$.
 
+Pentru arcul $(x, y)$, vârful $x$ este extremitate inițială, iar $y$ este extremitate finală.
+
+În graful orientat, perechile de vârfuri $(x_i, x_j)$ și $(x_j, x_i)$ reprezintă arce diferite. Graful orientat, care $\forall x_i, x_j \in X$ conține în același timp arcele $(x_i, x_j)$ și $(x_j, x_i)$ pentru $i \neq j$ se numește **simetric**. În caz contrar - **antisimetric**.
+
+Graful antisimetric cu un număr maxim de arce se numeşte **turnir**.
+
 ### Exemple:
 
 $$
@@ -264,6 +271,8 @@ $$
 <p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(grafOrientat1))}`">Editor</a></p>
 
 $$
+\textbf{Graf simetric}
+\newline
 G(X, A):
 \newline
 X = \{1, 2, 3, 4, 5\}
@@ -282,6 +291,8 @@ $$
 <p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(grafOrientat2))}`">Editor</a></p>
 
 $$
+\textbf{Graf antisimetric, turnir}
+\newline
 G(X, A):
 \newline
 X = \{1, 2, 3, 4\}
@@ -297,3 +308,26 @@ $$
 </div>
 
 <p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(grafOrientat3))}`">Editor</a></p>
+
+## Multigraf
+
+Multigraful este graful în care există cel puțin o pereche de vârfuri distincte $x_i, x_j$, care reprezintă mai mult decât o muchie a grafului. În acest caz se spune că vârfurile $x_i, x_j$ sunt unite cu ajutorul a $k \geq 2$ muchii.
+
+### Exemplu:
+
+$$
+G(X, U):
+\newline
+X = \{1, 2, 3, 4, 5\}
+\newline
+U = \{ \newline
+(1, 2), (1, 2), (1, 4), (2, 5), \newline
+(3, 4), (3, 5), (3, 5), (3, 5) \newline
+\}
+$$
+
+<div class="h-[200px]">
+  <GraphVisualization :graph="multigraf" />
+</div>
+
+<p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(multigraf))}`">Editor</a></p>

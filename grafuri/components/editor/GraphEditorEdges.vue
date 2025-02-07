@@ -31,7 +31,11 @@ const allPossibleEdges = computed<GraphEdgePossibility[]>(() =>
     .filter(notEmpty),
 )
 
-const edgesNotInGraph = computed(() => allPossibleEdges.value.filter(edge => !edge.isPresent))
+const edgesNotInGraph = computed(() =>
+  graph.value.type === GraphType.Multi
+    ? allPossibleEdges.value
+    : allPossibleEdges.value.filter(edge => !edge.isPresent),
+)
 const isPossibleToAddEdge = computed(() => edgesNotInGraph.value.length > 0)
 
 const mappedNodes = computed(() => new Map(graph.value.nodes.map(node => [node.id, node])))
@@ -56,7 +60,10 @@ function setEdges(newEdges: GraphEdge[]) {
 }
 
 function addEdge() {
-  const possibleEdge = allPossibleEdges.value.find(edge => !edge.isPresent)
+  const possibleEdge =
+    graph.value.type === GraphType.Multi
+      ? allPossibleEdges.value.at(-1)
+      : allPossibleEdges.value.find(edge => !edge.isPresent)
   if (!possibleEdge) {
     return
   }
@@ -100,7 +107,7 @@ function removeEdge(index: number) {
             :modelValue="edge"
             :nodes="mappedNodes"
             :possibleEdges="edgesNotInGraph"
-            :isOriented="graph.type === GraphType.Directed"
+            :graphType="graph.type"
             @update:modelValue="updateEdge(index, $event)"
             @removeClick="removeEdge(index)"
           />

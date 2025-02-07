@@ -293,3 +293,24 @@ export const grafOrientat3: Graph = {
     { source: '4', target: '2' },
   ],
 }
+
+export const multigraf: Graph = {
+  type: GraphType.Multi,
+  nodes: [
+    { id: '1', label: '1' },
+    { id: '2', label: '2' },
+    { id: '3', label: '3' },
+    { id: '4', label: '4' },
+    { id: '5', label: '5' },
+  ],
+  edges: [
+    { source: '1', target: '2' },
+    { source: '1', target: '2' },
+    { source: '1', target: '4' },
+    { source: '2', target: '5' },
+    { source: '3', target: '4' },
+    { source: '3', target: '5' },
+    { source: '3', target: '5' },
+    { source: '3', target: '5' },
+  ],
+}

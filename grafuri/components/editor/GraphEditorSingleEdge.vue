@@ -1,15 +1,11 @@
 <script setup lang="ts">
-import { type GraphEdge, type GraphEdgePossibility, type GraphNode } from '../types'
+import { GraphType, type GraphEdge, type GraphEdgePossibility, type GraphNode } from '../types'
 import { computed } from 'vue'
 
-const {
-  possibleEdges,
-  nodes,
-  isOriented = false,
-} = defineProps<{
+const { possibleEdges, nodes, graphType } = defineProps<{
   possibleEdges: GraphEdgePossibility[]
   nodes: Map<string, GraphNode>
-  isOriented?: boolean
+  graphType: GraphType
 }>()
 
 const edge = defineModel<GraphEdge>({ required: true })
@@ -22,24 +18,28 @@ const sourceNode = computed(() => nodes.get(edge.value.source))
 const targetNode = computed(() => nodes.get(edge.value.target))
 
 const sourceAlternatives = computed(() => [
-  ...possibleEdges
-    .filter(possibleEdge => possibleEdge.target === edge.value.target)
-    .map(possibleEdge => possibleEdge.source),
-  ...(isOriented
-    ? []
-    : possibleEdges
-        .filter(possibleEdge => possibleEdge.source === edge.value.target)
-        .map(possibleEdge => possibleEdge.target)),
+  ...new Set([
+    ...possibleEdges
+      .filter(possibleEdge => possibleEdge.target === edge.value.target)
+      .map(possibleEdge => possibleEdge.source),
+    ...(graphType === GraphType.Directed
+      ? []
+      : possibleEdges
+          .filter(possibleEdge => possibleEdge.source === edge.value.target)
+          .map(possibleEdge => possibleEdge.target)),
+  ]),
 ])
 const targetAlternatives = computed(() => [
-  ...(isOriented
-    ? []
-    : possibleEdges
-        .filter(possibleEdge => possibleEdge.target === edge.value.source)
-        .map(possibleEdge => possibleEdge.source)),
-  ...possibleEdges
-    .filter(possibleEdge => possibleEdge.source === edge.value.source)
-    .map(possibleEdge => possibleEdge.target),
+  ...new Set([
+    ...(graphType === GraphType.Directed
+      ? []
+      : possibleEdges
+          .filter(possibleEdge => possibleEdge.target === edge.value.source)
+          .map(possibleEdge => possibleEdge.source)),
+    ...possibleEdges
+      .filter(possibleEdge => possibleEdge.source === edge.value.source)
+      .map(possibleEdge => possibleEdge.target),
+  ]),
 ])
 
 const source = computed({
@@ -61,7 +61,7 @@ const target = computed({
     <div v-if="sourceNode && targetNode" class="grid grow grid-cols-2 grid-rows-1 gap-2">
       <div>
         <select v-model="source" class="w-full" :disabled="sourceAlternatives.length === 0">
-          <option :value="sourceNode.id">{{ sourceNode.label }}</option>
+          <option v-if="graphType !== GraphType.Multi" :value="sourceNode.id">{{ sourceNode.label }}</option>
           <option v-for="nodeId in sourceAlternatives" :key="nodeId" :value="nodeId">
             {{ nodes.get(nodeId)?.label }}
           </option>
@@ -69,7 +69,7 @@ const target = computed({
       </div>
       <div>
         <select v-model="target" class="w-full" :disabled="targetAlternatives.length === 0">
-          <option :value="targetNode.id">{{ targetNode.label }}</option>
+          <option v-if="graphType !== GraphType.Multi" :value="targetNode.id">{{ targetNode.label }}</option>
           <option v-for="nodeId in targetAlternatives" :key="nodeId" :value="nodeId">
             {{ nodes.get(nodeId)?.label }}
           </option>

@@ -46,6 +46,7 @@ const tabs = [
       <select v-model="graphType">
         <option :value="GraphType.Simple">Simplu</option>
         <option :value="GraphType.Directed">Orientat</option>
+        <option :value="GraphType.Multi">Multigraf</option>
       </select>
       <GraphEditorNodes v-if="activeTab === ActiveTab.Nodes" v-model="graph" />
       <GraphEditorEdges v-else-if="activeTab === ActiveTab.Edges" v-model="graph" />
