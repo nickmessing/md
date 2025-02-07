@@ -15,11 +15,22 @@ import { getColorClass } from './colors'
 
 const NODE_RADIUS = 20
 
-const { graph } = defineProps<{ graph: Graph }>()
+const {
+  graph,
+  defaultSize = { width: 0, height: 0 },
+  defaultNodePositions,
+} = defineProps<{
+  graph: Graph
+  defaultSize?: { width: number; height: number }
+  defaultNodePositions?: BiDimensionalCoordinates[]
+}>()
 
 const svg = useTemplateRef<SVGSVGElement>('svgElement')
 
-const { width, height } = useElementSize(svg)
+const { width: elementWidth, height: elementHeight } = useElementSize(svg)
+
+const width = computed(() => elementWidth.value ?? defaultSize.width)
+const height = computed(() => elementHeight.value ?? defaultSize.height)
 
 type Datum = d3.SimulationNodeDatum & { meta: GraphNode }
 
@@ -55,7 +66,14 @@ function createLinkForce() {
 
 const simulation = d3
   .forceSimulation<Datum>(
-    graph.nodes.map((node, index) => ({ index, meta: node, x: width.value / 2, y: height.value / 2, vx: 0, vy: 0 })),
+    graph.nodes.map((node, index) => ({
+      index,
+      meta: node,
+      x: defaultNodePositions?.[index]?.x ?? width.value / 2,
+      y: defaultNodePositions?.[index]?.y ?? height.value / 2,
+      vx: 0,
+      vy: 0,
+    })),
   )
   .force('collide', d3.forceCollide(NODE_RADIUS + 10).strength(0.3))
   .force('link', createLinkForce())
@@ -185,8 +203,8 @@ watch(
       ...nodesToAdd.map((node, index) => ({
         index: nodesToStay.length + index,
         meta: node,
-        x: width.value / 2 + (Math.random() * 30 - 15),
-        y: height.value / 2 + (Math.random() * 30 - 15),
+        x: defaultNodePositions?.[index]?.x ?? width.value / 2 + (Math.random() * 30 - 15),
+        y: defaultNodePositions?.[index]?.y ?? height.value / 2 + (Math.random() * 30 - 15),
         vx: 0,
         vy: 0,
       })),

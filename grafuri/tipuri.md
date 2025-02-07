@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import GraphVisualization from "./components/GraphVisualization.vue";
-import { GraphType } from "./components/types";
+import { useTemplateRef } from 'vue'
+import { useElementSize} from '@vueuse/core'
+import GraphVisualization from './components/GraphVisualization.vue'
+import { GraphType } from './components/types'
 import {
   grafVid,
   grafTrivial,
@@ -20,10 +22,16 @@ import {
   grafOrientat3,
   multigraf,
   pseudoGraf,
-} from "./tipuri.ts";
+} from './tipuri.ts'
+
+const fullWidth = useTemplateRef<HTMLDivElement>('full-width')
+
+const { width } = useElementSize(fullWidth)
 </script>
 
 # Tipuri de grafuri
+
+<div ref="full-width" class="w-full" />
 
 ## Graf vid
 
@@ -86,7 +94,21 @@ U = {(1, 4), (2, 3), (2, 5)}
 $$
 
 <div class="h-[200px]">
-  <GraphVisualization :graph="grafBipartit" />
+  <GraphVisualization
+    v-if="width"
+    :graph="grafBipartit"
+    :defaultSize="{
+      height: 200,
+      width
+    }"
+    :defaultNodePositions="[
+      { x: 292, y: 40 },
+      { x: 359, y: 38 },
+      { x: 295, y: 139 },
+      { x: 357, y: 140 },
+      { x: 417, y: 143 }
+    ]"
+  />
 </div>
 
 <p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(grafBipartit))}`">Editor</a></p>
@@ -120,10 +142,6 @@ $$
 #### Notă
 
 Grafurile $K_{1,n}$ se mai numesc stele.
-
-<!-- Graf complementar al grafului G este graful, cu aceeaşi mulţime de
-vârfui X, în care două vârfuri sunt adiacente dacă şi numai dacă ele nu
-sunt adiacente în G. Se notează graful complementar prin . -->
 
 ## Grafuri complementare
 
@@ -218,7 +236,22 @@ U = \{ \newline
 $$
 
 <div class="h-[200px]">
-  <GraphVisualization :graph="grafIzomorf1" />
+  <GraphVisualization
+    v-if="width"
+    :graph="grafIzomorf1"
+    :defaultSize="{
+      height: 200,
+      width
+    }"
+    :defaultNodePositions="[
+      { x: 287.5987642209948, y: 52.586146806623624 },
+      { x: 345.33173456218475, y: 36.28140381158778 },
+      { x: 402.35465340884076, y: 54.92177011320642 },
+      { x: 285.6794900510336, y: 144.92347181617967 },
+      { x: 400.39661438524973, y: 147.53335545507963 },
+      { x: 342.6387433716951, y: 163.75385199732304 }
+    ]"
+  />
 </div>
 
 <p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(grafIzomorf1))}`">Editor</a></p>
@@ -235,7 +268,22 @@ V = \{ \newline
 $$
 
 <div class="h-[200px]">
-  <GraphVisualization :graph="grafIzomorf2" />
+  <GraphVisualization
+    v-if="width"
+    :graph="grafIzomorf2"
+    :defaultSize="{
+      height: 200,
+      width
+    }"
+    :defaultNodePositions="[
+      { x: 364.4414946113241, y: 100.41886295679576 },
+      { x: 254.15817391032888, y: 68.93165569587678 },
+      { x: 360.60755658046384, y: 40.546324743982865 },
+      { x: 472.18414053313643, y: 100.98447098571827 },
+      { x: 359.36497536871724, y: 160.1987718790276 },
+      { x: 253.24365899602978, y: 128.91991373859844 }
+    ]"
+  />
 </div>
 
 <p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(grafIzomorf2))}`">Editor</a></p>
@@ -266,7 +314,21 @@ A = \{ \newline
 $$
 
 <div class="h-[200px]">
-  <GraphVisualization :graph="grafOrientat1" />
+  <GraphVisualization
+    v-if="width"
+    :graph="grafOrientat1"
+    :defaultSize="{
+      height: 200,
+      width
+    }"
+    :defaultNodePositions="[
+      { x: 256.84783746245233, y: 50.05448116125311 },
+      { x: 382.7389019303396, y: 21.375916834188075 },
+      { x: 331.4641384145417, y: 116.55666117977609 },
+      { x: 314.0844303525652, y: 173.97680281537765 },
+      { x: 434.86486365070175, y: 138.03634657200593 }
+    ]"
+  />
 </div>
 
 <p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(grafOrientat1))}`">Editor</a></p>
@@ -286,7 +348,21 @@ A = \{ \newline
 $$
 
 <div class="h-[200px]">
-  <GraphVisualization :graph="grafOrientat2" />
+  <GraphVisualization
+    v-if="width"
+    :graph="grafOrientat2"
+    :defaultSize="{
+      height: 200,
+      width
+    }"
+    :defaultNodePositions="[
+      { x: 241.3344725415201, y: 37.35463408731846 },
+      { x: 239.05451453246278, y: 157.39443041786907 },
+      { x: 344.01704633781884, y: 99.34625497982151 },
+      { x: 449.8808265594981, y: 42.958731610981495 },
+      { x: 445.71313853081955, y: 162.94594980876596 }
+    ]"
+  />
 </div>
 
 <p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(grafOrientat2))}`">Editor</a></p>
@@ -328,7 +404,21 @@ U = \{ \newline
 $$
 
 <div class="h-[200px]">
-  <GraphVisualization :graph="multigraf" />
+  <GraphVisualization
+    v-if="width"
+    :graph="multigraf"
+    :defaultSize="{
+      height: 200,
+      width
+    }"
+    :defaultNodePositions="[
+      { x: 295.7338628087382, y: 37.67893938312949 },
+      { x: 414.4293875660266, y: 54.06284920584302 },
+      { x: 342.2262408638906, y: 102.04564221790058 },
+      { x: 226.59360552233352, y: 135.41943657511547 },
+      { x: 441.0169032390118, y: 170.79313261800965 }
+    ]"
+  />
 </div>
 
 <p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(multigraf))}`">Editor</a></p>
