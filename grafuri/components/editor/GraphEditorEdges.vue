@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Graph, GraphEdge, GraphEdgePossibility } from '../types'
+import { GraphType, type Graph, type GraphEdge, type GraphEdgePossibility } from '../types'
 import { notEmpty } from '../utils'
 import { computed } from 'vue'
 import GraphEditorSingleEdge from './GraphEditorSingleEdge.vue'
@@ -10,15 +10,15 @@ const allPossibleEdges = computed<GraphEdgePossibility[]>(() =>
   graph.value.nodes
     .flatMap((node, index) =>
       graph.value.nodes.map((otherNode, otherIndex) => {
-        if (node.id === otherNode.id || index >= otherIndex) {
+        if (node.id === otherNode.id || (graph.value.type === GraphType.Directed ? false : index >= otherIndex)) {
           return null
         }
 
         const edge = graph.value.edges.find(edge => {
-          return (
-            (edge.source === node.id && edge.target === otherNode.id) ||
-            (edge.source === otherNode.id && edge.target === node.id)
-          )
+          return graph.value.type === GraphType.Directed
+            ? edge.source === node.id && edge.target === otherNode.id
+            : (edge.source === node.id && edge.target === otherNode.id) ||
+                (edge.source === otherNode.id && edge.target === node.id)
         })
 
         return {

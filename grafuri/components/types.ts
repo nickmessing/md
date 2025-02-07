@@ -1,5 +1,6 @@
 export enum GraphType {
-  Simple = 'Simple',
+  Simple = 'simple',
+  Directed = 'directed',
 }
 
 export type GraphNode = {
@@ -13,7 +14,7 @@ export type GraphEdge = {
 }
 
 export type Graph = {
-  type: GraphType.Simple
+  type: GraphType.Simple | GraphType.Directed
   nodes: GraphNode[]
   edges: GraphEdge[]
 }

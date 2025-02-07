@@ -1,238 +1,24 @@
 <script setup lang="ts">
-import GraphVisualization from './components/GraphVisualization.vue'
-import { GraphType } from './components/types'
-
-const grafVid = {
-  type: GraphType.Simple,
-  nodes: [
-    { id: '1', label: '1' },
-    { id: '2', label: '2' },
-    { id: '3', label: '3' },
-    { id: '4', label: '4' },
-    { id: '5', label: '5' },
-    { id: '6', label: '6' },
-  ],
-  edges: [],
-}
-
-const grafTrivial = {
-  type: GraphType.Simple,
-  nodes: [
-    { id: '1', label: '1' },
-  ],
-  edges: [],
-}
-
-const grafComplet3 = {
-  type: GraphType.Simple,
-  nodes: [
-    { id: '1', label: '1' },
-    { id: '2', label: '2' },
-    { id: '3', label: '3' },
-  ],
-  edges: [
-    { source: '1', target: '2' },
-    { source: '1', target: '3' },
-    { source: '2', target: '3' },
-  ],
-}
-
-const grafComplet5 = {
-  type: GraphType.Simple,
-  nodes: [
-    { id: '1', label: '1' },
-    { id: '2', label: '2' },
-    { id: '3', label: '3' },
-    { id: '4', label: '4' },
-    { id: '5', label: '5' },
-  ],
-  edges: [
-    { source: '1', target: '2' },
-    { source: '1', target: '3' },
-    { source: '1', target: '4' },
-    { source: '1', target: '5' },
-    { source: '2', target: '3' },
-    { source: '2', target: '4' },
-    { source: '2', target: '5' },
-    { source: '3', target: '4' },
-    { source: '3', target: '5' },
-    { source: '4', target: '5' },
-  ],
-}
-
-const grafBipartit = {
-  type: GraphType.Simple,
-  nodes: [
-    { id: '1', label: '1' },
-    { id: '2', label: '2' },
-    { id: '3', label: '3' },
-    { id: '4', label: '4' },
-    { id: '5', label: '5' },
-  ],
-  edges: [
-    { source: '1', target: '4' },
-    { source: '2', target: '3' },
-    { source: '2', target: '5' },
-  ],
-}
-
-const grafBipartit3_3 = {
-  type: GraphType.Simple,
-  nodes: [
-    { id: '1', label: '1' },
-    { id: '2', label: '2' },
-    { id: '3', label: '3' },
-    { id: '4', label: '4' },
-    { id: '5', label: '5' },
-    { id: '6', label: '6' },
-  ],
-  edges: [
-    { source: '1', target: '4' },
-    { source: '1', target: '5' },
-    { source: '1', target: '6' },
-    { source: '2', target: '4' },
-    { source: '2', target: '5' },
-    { source: '2', target: '6' },
-    { source: '3', target: '4' },
-    { source: '3', target: '5' },
-    { source: '3', target: '6' },
-  ],
-}
-
-const grafBipartit1_3 = {
-  type: GraphType.Simple,
-  nodes: [
-    { id: '1', label: '1' },
-    { id: '2', label: '2' },
-    { id: '3', label: '3' },
-    { id: '4', label: '4' },
-  ],
-  edges: [
-    { source: '1', target: '2' },
-    { source: '1', target: '3' },
-    { source: '1', target: '4' },
-  ],
-}
-
-const grafCompl1 = {
-  type: GraphType.Simple,
-  nodes: [
-    { id: '1', label: '1' },
-    { id: '2', label: '2' },
-    { id: '3', label: '3' },
-    { id: '4', label: '4' },
-    { id: '5', label: '5' },
-  ],
-  edges: [
-    { source: '1', target: '2' },
-    { source: '1', target: '4' },
-    { source: '1', target: '5' },
-    { source: '2', target: '3' },
-    { source: '3', target: '4' },
-    { source: '4', target: '5' },
-  ],
-}
-
-const grafCompl2 = {
-  type: GraphType.Simple,
-  nodes: [
-    { id: '1', label: '1' },
-    { id: '2', label: '2' },
-    { id: '3', label: '3' },
-    { id: '4', label: '4' },
-    { id: '5', label: '5' },
-  ],
-  edges: [
-    { source: '1', target: '3' },
-    { source: '2', target: '4' },
-    { source: '2', target: '5' },
-    { source: '3', target: '5' },
-  ],
-}
-
-const grafMuc1 = {
-  type: GraphType.Simple,
-  nodes: [
-    { id: '1', label: '1' },
-    { id: '2', label: '2' },
-    { id: '3', label: '3' },
-    { id: '4', label: '4' },
-  ],
-  edges: [
-    { source: '1', target: '2' },
-    { source: '1', target: '3' },
-    { source: '1', target: '4' },
-    { source: '2', target: '3' },
-    { source: '3', target: '4' },
-  ],
-}
-
-const grafMuc2 = {
-  type: GraphType.Simple,
-  nodes: [
-    { id: 'a', label: '1,3' },
-    { id: 'b', label: '2,3' },
-    { id: 'c', label: '3,4' },
-    { id: 'd', label: '1,2' },
-    { id: 'e', label: '1,4' },
-  ],
-  edges: [
-    { source: 'a', target: 'b' },
-    { source: 'a', target: 'c' },
-    { source: 'a', target: 'd' },
-    { source: 'a', target: 'e' },
-    { source: 'b', target: 'c' },
-    { source: 'b', target: 'd' },
-    { source: 'c', target: 'e' },
-    { source: 'd', target: 'e' },
-  ],
-}
-
-const grafIzomorf1 = {
-  type: GraphType.Simple,
-  nodes: [
-    { id: '1', label: '1' },
-    { id: '2', label: '2' },
-    { id: '3', label: '3' },
-    { id: '4', label: '4' },
-    { id: '5', label: '5' },
-    { id: '6', label: '6' },
-  ],
-  edges: [
-    { source: '1', target: '4' },
-    { source: '1', target: '5' },
-    { source: '1', target: '6' },
-    { source: '2', target: '4' },
-    { source: '2', target: '5' },
-    { source: '2', target: '6' },
-    { source: '3', target: '4' },
-    { source: '3', target: '5' },
-    { source: '3', target: '6' },
-  ],
-}
-
-const grafIzomorf2 = {
-  type: GraphType.Simple,
-  nodes: [
-    { id: 'a', label: 'a' },
-    { id: 'b', label: 'b' },
-    { id: 'c', label: 'c' },
-    { id: 'd', label: 'd' },
-    { id: 'e', label: 'e' },
-    { id: 'f', label: 'f' },
-  ],
-  edges: [
-    { source: 'a', target: 'b' },
-    { source: 'a', target: 'd' },
-    { source: 'a', target: 'f' },
-    { source: 'c', target: 'b' },
-    { source: 'c', target: 'd' },
-    { source: 'c', target: 'f' },
-    { source: 'e', target: 'b' },
-    { source: 'e', target: 'd' },
-    { source: 'e', target: 'f' },
-  ],
-}
+import GraphVisualization from "./components/GraphVisualization.vue";
+import { GraphType } from "./components/types";
+import {
+  grafVid,
+  grafTrivial,
+  grafComplet3,
+  grafComplet5,
+  grafBipartit,
+  grafBipartit3_3,
+  grafBipartit1_3,
+  grafCompl1,
+  grafCompl2,
+  grafMuc1,
+  grafMuc2,
+  grafIzomorf1,
+  grafIzomorf2,
+  grafOrientat1,
+  grafOrientat2,
+  grafOrientat3,
+} from "./tipuri.ts";
 </script>
 
 # Tipuri de grafuri
@@ -451,3 +237,88 @@ $$
 </div>
 
 <p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(grafIzomorf2))}`">Editor</a></p>
+
+## Graf orientat
+
+Perechea de mulțimi $G=(X, A)$, unde $X$ este o mulțime nevidă de elemente distincte, iar $A$ este formată din perechi **ordonate** de elemente din $X$, se numește graf orientat.
+
+Mulțimea $A$ se numește mulțimea arcelor grafului $G$.
+
+### Exemple:
+
+$$
+G(X, A):
+\newline
+X = \{1, 2, 3, 4, 5\}
+\newline
+A = \{ \newline
+(1, 3), (2, 1), (2, 5), (3, 2), \newline
+(3, 5), (4, 1), (4, 5), (5, 4) \newline
+\}
+$$
+
+<div class="h-[200px]">
+  <GraphVisualization :graph="grafOrientat1" />
+</div>
+
+<p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(grafOrientat1))}`">Editor</a></p>
+
+<!-- export const grafOrientat2: Graph = {
+  type: GraphType.Directed,
+  nodes: [
+    { id: '1', label: '1' },
+    { id: '2', label: '2' },
+    { id: '3', label: '3' },
+    { id: '4', label: '4' },
+    { id: '5', label: '5' },
+  ],
+  edges: [
+    { source: '1', target: '2' },
+    { source: '1', target: '3' },
+    { source: '2', target: '1' },
+    { source: '2', target: '3' },
+    { source: '3', target: '1' },
+    { source: '3', target: '2' },
+    { source: '3', target: '4' },
+    { source: '3', target: '5' },
+    { source: '4', target: '3' },
+    { source: '4', target: '5' },
+    { source: '5', target: '3' },
+    { source: '5', target: '4' },
+  ],
+} -->
+
+$$
+G(X, A):
+\newline
+X = \{1, 2, 3, 4, 5\}
+\newline
+A = \{ \newline
+(1, 2), (1, 3), (2, 1), (2, 3), \newline
+(3, 1), (3, 2), (3, 4), (3, 5), \newline
+(4, 3), (4, 5), (5, 3), (5, 4) \newline
+\}
+$$
+
+<div class="h-[200px]">
+  <GraphVisualization :graph="grafOrientat2" />
+</div>
+
+<p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(grafOrientat2))}`">Editor</a></p>
+
+$$
+G(X, A):
+\newline
+X = \{1, 2, 3, 4\}
+\newline
+A = \{ \newline
+(1, 2), (3, 1), (3, 2), \newline
+(3, 4), (4, 1), (4, 2) \newline
+\}
+$$
+
+<div class="h-[200px]">
+  <GraphVisualization :graph="grafOrientat3" />
+</div>
+
+<p><a :href="`./editor.html?graph=${encodeURIComponent(JSON.stringify(grafOrientat3))}`">Editor</a></p>
