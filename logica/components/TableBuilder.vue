@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import { shallowRef } from 'vue'
-import FormulaEditor from './editor/FormulaEditor.vue'
+import { defineAsyncComponent, shallowRef } from 'vue'
 import { AST } from './utils/language/ast'
 import FormulaRenderer from './FormulaRenderer.vue'
+
+const FormulaEditor =
+  typeof window !== 'undefined' && window.document
+    ? defineAsyncComponent(() => import('./editor/FormulaEditor.vue'))
+    : () => null
 
 const ast = shallowRef<AST>([])
 </script>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { computed, shallowRef } from 'vue'
-import FormulaEditor from './editor/FormulaEditor.vue'
+import { computed, defineAsyncComponent, shallowRef } from 'vue'
 import {
   AST,
   ExpressionNode,
@@ -27,6 +26,11 @@ import {
   unaryOperation,
   valueNode,
 } from './utils/language/astTransform'
+
+const FormulaEditor =
+  typeof window !== 'undefined' && window.document
+    ? defineAsyncComponent(() => import('./editor/FormulaEditor.vue'))
+    : () => null
 
 const ast = shallowRef<AST>([])
 

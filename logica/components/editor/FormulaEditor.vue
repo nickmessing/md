@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useTemplateRef, shallowRef, watch, onScopeDispose, computed } from 'vue'
-import * as monaco from 'monaco-editor'
+import * as monaco from 'monaco-editor/esm/vs/editor/editor.api'
 import { languageId, themeId } from '../utils/monaco'
 import { useRouteQuery } from '../../../composables/useRouteQuery'
 import { tokenize } from '../utils/language/tokens'
