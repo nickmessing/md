@@ -94,7 +94,7 @@ Se citește "A dacă și numai dacă B" sau "A echivalent cu B".
 
 [Editor](./tabele.md?expression=A%20iff%20B)
 
-Poate fi interpretată ca $(\overline{A} \land \overline{B}) \lor (A \land B)$.
+Poate fi interpretată ca $(A \rightarrow B) \land (B \rightarrow A)$.
 
 ### Altele
 
@@ -104,9 +104,9 @@ Poate fi interpretată ca $(\overline{A} \land \overline{B}) \lor (A \land B)$.
 - $A \lor \overline{A} \equiv 1$ - identic adevărată. În [constructor](./tabele.md?expression=1) `1`.
 - $A \land \overline{A} \equiv 0$ - identic falsă. În [constructor](./tabele.md?expression=0) `0`.
 
-<FormulaRenderer expression="A nand B, A nor B, A xor B, 1, 0, A or not A, A and not A" />
+<FormulaRenderer expression="A nand B; A nor B; A xor B; 1; 0; A or not A; A and not A" />
 
-[Editor](./tabele.md?expression=A%20nand%20B,%20A%20nor%20B,%20A%20xor%20B,%201,%200,%20A%20or%20not%20A,%20A%20and%20not%20A)
+[Editor](./tabele.md?expression=A+nand+B%3B+A+nor+B%3B+A+xor+B%3B+1%3B+0%3B+A+or+not+A%3B+A+and+not+A)
 
 #### Notă
 

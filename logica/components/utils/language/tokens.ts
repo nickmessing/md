@@ -13,15 +13,21 @@ export type Bracket = (typeof brackets)[number]
 export const values = ['0', '1'] as const
 export type Value = (typeof values)[number]
 
+export const separator = ';' as const
+export type Separator = typeof separator
+
 export enum TokenType {
   Bracket = 'bracket',
   Variable = 'variable',
   Operator = 'operator',
   Value = 'value',
+  Separator = 'separator',
 }
 
 export type TokenBase = {
-  position: number
+  line: number
+  column: number
+  length: number
 }
 
 export type BracketToken = TokenBase & {
@@ -41,15 +47,21 @@ export type OperatorToken = TokenBase & {
 
 export type ValueToken = TokenBase & {
   type: TokenType.Value
-  value: '0' | '1'
+  value: Value
 }
 
-export type Token = BracketToken | VariableToken | OperatorToken | ValueToken
+export type SeparatorToken = TokenBase & {
+  type: TokenType.Separator
+  value: Separator
+}
+
+export type Token = BracketToken | VariableToken | OperatorToken | ValueToken | SeparatorToken
 
 export type TokenizationErrorResult = {
   success: false
   message: string
-  index: number
+  line: number
+  column: number
   length: number
 }
 
@@ -76,30 +88,69 @@ export function isValidValue(str: string): str is Value {
   return values.includes(str as Value)
 }
 
+export function isValidSeparator(str: string): str is Separator {
+  return str === separator
+}
+
 export function tokenize(str: string): TokenizationResult {
   const tokens: Token[] = []
   let readingString = ''
+  let line = 1
   let index = 0
+  let column = 0
   let error: TokenizationErrorResult | undefined
 
-  function pushReadingString() {
-    let properIndex = index - readingString.length
+  function pushReadingString(line: number, column: number) {
+    const properColumn = column - readingString.length
     if (readingString === '') {
       return
     }
     if (isValidBracket(readingString)) {
-      tokens.push({ type: TokenType.Bracket, value: readingString, position: properIndex })
+      tokens.push({
+        type: TokenType.Bracket,
+        value: readingString,
+        line,
+        column: properColumn,
+        length: readingString.length,
+      })
     } else if (isValidVariableName(readingString)) {
-      tokens.push({ type: TokenType.Variable, value: readingString, position: properIndex })
+      tokens.push({
+        type: TokenType.Variable,
+        value: readingString,
+        line,
+        column: properColumn,
+        length: readingString.length,
+      })
     } else if (isValidOperator(readingString)) {
-      tokens.push({ type: TokenType.Operator, value: readingString, position: properIndex })
+      tokens.push({
+        type: TokenType.Operator,
+        value: readingString,
+        line,
+        column: properColumn,
+        length: readingString.length,
+      })
     } else if (isValidValue(readingString)) {
-      tokens.push({ type: TokenType.Value, value: readingString, position: properIndex })
+      tokens.push({
+        type: TokenType.Value,
+        value: readingString,
+        line,
+        column: properColumn,
+        length: readingString.length,
+      })
+    } else if (isValidSeparator(readingString)) {
+      tokens.push({
+        type: TokenType.Separator,
+        line,
+        column: properColumn,
+        length: readingString.length,
+        value: separator,
+      })
     } else {
       error = {
         success: false,
-        message: `Invalid token "${readingString}" at index ${properIndex}`,
-        index: properIndex,
+        message: `Invalid token "${readingString}" on line ${line}, column ${properColumn}`,
+        line,
+        column: properColumn,
         length: readingString.length,
       }
     }
@@ -112,18 +163,27 @@ export function tokenize(str: string): TokenizationResult {
     }
     const char = str[index]
     if (char === ' ') {
-      pushReadingString()
+      pushReadingString(line, column)
+    } else if (char === '\n') {
+      pushReadingString(line, column)
+      line++
+      column = 0
     } else if (char === '(' || char === ')') {
-      pushReadingString()
+      pushReadingString(line, column)
       readingString += char
-      pushReadingString()
+      pushReadingString(line, column)
+    } else if (char === ';') {
+      pushReadingString(line, column)
+      readingString += char
+      pushReadingString(line, column)
     } else {
       readingString += char
     }
     index++
+    column++
   }
 
-  pushReadingString()
+  pushReadingString(line, column)
 
   return (
     error ?? {

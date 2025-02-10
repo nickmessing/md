@@ -43,12 +43,13 @@ export type VariableNode = {
 
 export type ExpressionNode = ValueNode | OperationNode | VariableNode
 
-export type AST = ExpressionNode
+export type AST = ExpressionNode[]
 
 export type ParsingErrorResult = {
   success: false
   message: string
-  index: number
+  line: number
+  column: number
   length: number
 }
 
@@ -106,6 +107,7 @@ export function expressionUniqueHash(expression: ExpressionNode): string {
 // https://en.wikipedia.org/wiki/Recursive_descent_parser
 export function parse(tokens: Token[]): ParsingResult {
   let currentIndex = 0
+  const expressions: ExpressionNode[] = []
 
   function currentToken(): Token | undefined {
     return tokens[currentIndex]
@@ -119,22 +121,26 @@ export function parse(tokens: Token[]): ParsingResult {
     return {
       success: false,
       message,
-      index: token.position,
-      length: 1,
+      line: token.line,
+      column: token.column,
+      length: token.length,
     }
   }
 
+  // parse a "factor" => unaryOp factor | '(' expr ')' | value | variable
   function parseFactor(): ExpressionNode | ParsingErrorResult {
-    let token = currentToken()
+    const token = currentToken()
     if (!token) {
       return {
         success: false,
         message: 'Unexpected end of tokens while parsing factor',
-        index: -1,
+        line: -1,
+        column: -1,
         length: 0,
       }
     }
 
+    // unary operator?
     if (token.type === TokenType.Operator) {
       if (!unaryOperators.includes(token.value as UnaryOperator)) {
         return errorAtToken(`Expected unary operator but got '${token.value}'`, token)
@@ -143,6 +149,7 @@ export function parse(tokens: Token[]): ParsingResult {
       advance()
       const operand = parseFactor()
       if (isParsingErrorResult(operand)) return operand
+
       return {
         type: NodeType.Operation,
         operation: {
@@ -153,6 +160,7 @@ export function parse(tokens: Token[]): ParsingResult {
       }
     }
 
+    // '(' expr ')'
     if (token.type === TokenType.Bracket && token.value === '(') {
       advance() // consume '('
       const expr = parseExpression()
@@ -160,17 +168,13 @@ export function parse(tokens: Token[]): ParsingResult {
 
       const closing = currentToken()
       if (!closing || closing.type !== TokenType.Bracket || closing.value !== ')') {
-        return {
-          success: false,
-          message: 'Missing closing parenthesis',
-          index: token.position,
-          length: 1,
-        }
+        return errorAtToken(`Unexpected token '${token.value}', expected closing parenthesis`, closing ?? token)
       }
       advance() // consume ')'
       return expr
     }
 
+    // value
     if (token.type === TokenType.Value) {
       const node: ValueNode = {
         type: NodeType.Value,
@@ -180,6 +184,7 @@ export function parse(tokens: Token[]): ParsingResult {
       return node
     }
 
+    // variable
     if (token.type === TokenType.Variable) {
       const node: VariableNode = {
         type: NodeType.Variable,
@@ -192,21 +197,23 @@ export function parse(tokens: Token[]): ParsingResult {
     return errorAtToken(`Unexpected token '${token.value}'`, token)
   }
 
+  // parse an expression => factor (binaryOp factor)*
   function parseExpression(): ExpressionNode | ParsingErrorResult {
     let left = parseFactor()
     if (isParsingErrorResult(left)) return left
 
     while (true) {
-      const token = currentToken()
-      if (!token || token.type !== TokenType.Operator) break
+      const tok = currentToken()
+      if (!tok || tok.type !== TokenType.Operator) break
 
-      if (!binaryOperators.includes(token.value as BinaryOperator)) {
-        return errorAtToken(`Expected binary operator but got '${token.value}'`, token)
+      // must be a binary operator
+      if (!binaryOperators.includes(tok.value as BinaryOperator)) {
+        return errorAtToken(`Expected binary operator but got '${tok.value}'`, tok)
       }
-      const op = token.value as BinaryOperator
-      advance()
+      const op = tok.value as BinaryOperator
+      advance() // consume operator
 
-      let right = parseFactor()
+      const right = parseFactor()
       if (isParsingErrorResult(right)) return right
 
       left = {
@@ -222,19 +229,50 @@ export function parse(tokens: Token[]): ParsingResult {
     return left
   }
 
-  const result = parseExpression()
+  // parse all expressions separated by 'Separator' tokens
+  while (currentIndex < tokens.length) {
+    const expr = parseExpression()
+    if (isParsingErrorResult(expr)) {
+      return expr
+    }
+    expressions.push(expr)
 
-  if (isParsingErrorResult(result)) {
-    return result
-  }
-
-  if (currentIndex < tokens.length) {
-    const token = currentToken()!
-    return errorAtToken('Unexpected extra tokens', token)
+    // if next token is a separator, consume it and continue
+    const sep = currentToken()
+    if (sep && sep.type === TokenType.Separator) {
+      advance() // skip ';'
+    } else {
+      // If there's no separator, we break if we've used up tokens or if next tokens won't parse
+      if (currentIndex < tokens.length) {
+        // There's leftover tokens but not a separator => might be an error or next expression
+        // For a simpler approach, treat as error
+        return errorAtToken(`Unexpected token '${sep?.value}'`, sep ?? tokens[tokens.length - 1])
+      }
+    }
   }
 
   return {
     success: true,
-    ast: result as ExpressionNode,
-  } satisfies ParsingSuccessResult
+    ast: expressions,
+  }
+}
+
+export function expressionToString(expression: ExpressionNode): string {
+  if (isValueNode(expression)) {
+    return expression.value
+  }
+  if (isVariableNode(expression)) {
+    return expression.name
+  }
+  if (isOperationNode(expression)) {
+    if (isUnaryOperation(expression.operation)) {
+      return `${expression.operation.operator} (${expressionToString(expression.operation.operand)})`
+    }
+    if (isBinaryOperation(expression.operation)) {
+      return `(${expressionToString(expression.operation.left)} ${expression.operation.operator} ${expressionToString(
+        expression.operation.right,
+      )})`
+    }
+  }
+  return ''
 }

@@ -7,7 +7,7 @@ import {
   isValueNode,
   isVariableNode,
   Operation,
-} from './ast'
+} from './language/ast'
 
 export function extractExpressionsFromOperation(operation: Operation): ExpressionNode[] {
   if (isUnaryOperation(operation)) {

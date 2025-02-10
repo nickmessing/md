@@ -9,8 +9,8 @@ import {
   isUnaryOperation,
   isValueNode,
   isVariableNode,
-} from './utils/ast'
-import { Value } from './utils/tokens'
+} from './utils/language/ast'
+import { Value } from './utils/language/tokens'
 import { and, iff, implies, nand, nor, not, or, xor } from './utils/evaluation'
 
 const { expressions } = defineProps<{
@@ -120,7 +120,7 @@ const rows = computed(() => {
     <thead>
       <tr>
         <th v-for="(expression, index) in expressions" :key="index">
-          <AstRenderer :ast="expression" isRootNode />
+          <AstRenderer :expression="expression" isRootNode />
         </th>
       </tr>
     </thead>

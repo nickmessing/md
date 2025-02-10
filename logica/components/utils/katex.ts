@@ -5,7 +5,7 @@ import {
   isUnaryOperation,
   isValueNode,
   isVariableNode,
-} from './ast'
+} from './language/ast'
 
 export function buildKatexString(expression: ExpressionNode, isBracketSetOmitted = false): string {
   if (isValueNode(expression)) {

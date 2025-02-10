@@ -20,6 +20,7 @@ export default defineConfig({
         { text: 'Algebra propozițiilor', link: '/logica/algebra-propozitiilor' },
         { text: 'Forme normale', link: '/logica/forme-normale' },
         { text: 'Constructor de tabele', link: '/logica/tabele' },
+        { text: 'Calculator de forma normală', link: '/logica/calculator-forma-normala' },
       ],
       '/grafuri/': [
         { text: 'Editor de grafuri', link: '/grafuri/editor' },
