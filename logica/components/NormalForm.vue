@@ -26,6 +26,7 @@ import {
   unaryOperation,
   valueNode,
 } from './utils/language/astTransform'
+import { BinaryOperator } from './utils/language/tokens'
 
 const FormulaEditor =
   typeof window !== 'undefined' && window.document
@@ -473,12 +474,10 @@ const katexString = computed(() => {
   while (!isChainOfSimpleChains(expression)) {
     nextStep()
     if (!isOperationNode(expression)) {
-      addLine('\\text{Eroare: Expresia nu este o operație}')
       return response
     }
     const operation = expression.operation
     if (!isBinaryOperation(operation)) {
-      addLine('\\text{Eroare: Expresia nu este o operație binară}')
       return response
     }
     if (operation.operator !== 'and' && operation.operator !== 'or') {
@@ -497,14 +496,12 @@ const katexString = computed(() => {
 
   function dedupe() {
     if (!isOperationNode(expression)) {
-      addLine('\\text{Eroare: Expresia nu este o operație}')
       return response
     }
 
     const operation = expression.operation
 
     if (!isBinaryOperation(operation)) {
-      addLine('\\text{Eroare: Expresia nu este o operație binară}')
       return response
     }
 
@@ -557,16 +554,17 @@ const katexString = computed(() => {
     }
   }
 
-  function fixFinalExpression() {
+  function fixFinalExpression(expressionToUseIfSimple: BinaryOperator = 'and') {
     if (!isOperationNode(expression)) {
-      addLine('\\text{Eroare: Expresia nu este o operație}')
+      const opposedOperator = expressionToUseIfSimple === 'and' ? 'or' : 'and'
+      const element = operationNode(binaryOperation(expressionToUseIfSimple, expression, expression))
+      expression = operationNode(binaryOperation(opposedOperator, element, element))
       return response
     }
 
     const operation = expression.operation
 
     if (!isBinaryOperation(operation)) {
-      addLine('\\text{Eroare: Expresia nu este o operație binară}')
       return response
     }
 
@@ -602,14 +600,12 @@ const katexString = computed(() => {
 
   function fixReduction() {
     if (!isOperationNode(expression)) {
-      addLine('\\text{Eroare: Expresia nu este o operație}')
       return response
     }
 
     const operation = expression.operation
 
     if (!isBinaryOperation(operation)) {
-      addLine('\\text{Eroare: Expresia nu este o operație binară}')
       return response
     }
 
@@ -620,7 +616,7 @@ const katexString = computed(() => {
 
     const chainElements = getChainElements(expression, operation.operator)
 
-    let wasDuplicationmessageDisplayed = false
+    let wasDuplicationMessageDisplayed = false
 
     for (const [index, chainElement] of chainElements.entries()) {
       if (!isOperationNode(chainElement)) {
@@ -656,10 +652,10 @@ const katexString = computed(() => {
       const overridingValue = chainElementOperation.operator === 'and' ? '0' : '1'
 
       if (duplication) {
-        if (!wasDuplicationmessageDisplayed) {
+        if (!wasDuplicationMessageDisplayed) {
           nextStep()
           addText('Eliminăm expresiile redundante:')
-          wasDuplicationmessageDisplayed = true
+          wasDuplicationMessageDisplayed = true
         }
 
         const formula = `(${duplication} \\l${chainElementOperation.operator} \\overline{${duplication}}) \\equiv ${overridingValue}`
@@ -667,17 +663,17 @@ const katexString = computed(() => {
 
         chainElements[index] = valueNode(overridingValue)
       } else if (simpleValues.has(overridingValue)) {
-        if (!wasDuplicationmessageDisplayed) {
+        if (!wasDuplicationMessageDisplayed) {
           nextStep()
           addText('Eliminăm expresiile redundante:')
-          wasDuplicationmessageDisplayed = true
+          wasDuplicationMessageDisplayed = true
         }
 
         chainElements[index] = valueNode(overridingValue)
       }
     }
 
-    if (wasDuplicationmessageDisplayed) {
+    if (wasDuplicationMessageDisplayed) {
       expression = buildChain(chainElements, operation.operator)
       addSpace()
       addText('Rezultat: ')
@@ -687,14 +683,12 @@ const katexString = computed(() => {
 
   function fixEmptyElement() {
     if (!isOperationNode(expression)) {
-      addLine('\\text{Eroare: Expresia nu este o operație}')
       return response
     }
 
     const operation = expression.operation
 
     if (!isBinaryOperation(operation)) {
-      addLine('\\text{Eroare: Expresia nu este o operație binară}')
       return response
     }
 
@@ -722,7 +716,10 @@ const katexString = computed(() => {
       )
       addSpace()
       addText('Rezultat: ')
-      expression = buildChain(updatedChainElements, operation.operator)
+      expression = buildChain(
+        updatedChainElements.length === 0 ? [chainElements[0]] : updatedChainElements,
+        operation.operator,
+      )
       addExpression(expression)
     }
   }
@@ -753,7 +750,7 @@ const katexString = computed(() => {
   dedupe()
   fixReduction()
   fixEmptyElement()
-  fixFinalExpression()
+  fixFinalExpression('or')
 
   addSpace()
   addText('Rezultat final în altă formă: ')
