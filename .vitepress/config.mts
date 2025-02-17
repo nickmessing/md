@@ -19,6 +19,8 @@ export default defineConfig({
       '/logica/': [
         { text: 'Algebra propozițiilor', link: '/logica/algebra-propozitiilor' },
         { text: 'Forme normale', link: '/logica/forme-normale' },
+        { text: 'Forme normale perfecte', link: '/logica/forme-normale-perfecte' },
+        { text: 'Funcțiile algebrei propoziționale', link: '/logica/functiile-algebrei-propozitionale' },
         { text: 'Constructor de tabele', link: '/logica/tabele' },
         { text: 'Calculator de forma normală', link: '/logica/calculator-forma-normala' },
       ],

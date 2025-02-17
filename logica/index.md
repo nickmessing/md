@@ -7,3 +7,5 @@ Logica nu se interesează de conținutul afirmațiilor, doar dacă rezultă adev
 - [Calculator forma normală](calculator-forma-normala.md)
 - [Algebra Propozițiilor](algebra-propozitiilor.md)
 - [Forme normale. Rezolvarea problemei deciziei cu ajutorul formei normale.](forme-normale.md)
+- [Forme normale perfecte](forme-normale-perfecte.md)
+- [Functiile algebrei propozitionale](functiile-algebrei-propozitionale.md)
