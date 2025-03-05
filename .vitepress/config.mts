@@ -23,6 +23,8 @@ export default defineConfig({
         { text: 'Funcțiile algebrei propoziționale', link: '/logica/functiile-algebrei-propozitionale' },
         { text: 'Constructor de tabele', link: '/logica/tabele' },
         { text: 'Calculator de forma normală', link: '/logica/calculator-forma-normala' },
+        { text: 'Metoda analitică de definire a funcțiilor algebrei propoziționale', link: '/logica/metoda-analitica' },
+        { text: 'Realizarea funcțiilor algebrei propoziționale prin formule', link: '/logica/realizarea-functiilor' },
       ],
       '/grafuri/': [
         { text: 'Editor de grafuri', link: '/grafuri/editor' },

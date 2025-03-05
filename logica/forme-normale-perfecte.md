@@ -1,6 +1,6 @@
 # Forme normale perfecte
 
-Vom introduce noțiunea de formule echivalente pornind de la faptul că fiecare formulă determină o corespondență sau o funcție între mulțimea tuturor cortegiilor de valori din formulele date și valorile logice de 0 și 1 sau adevăr și fals. Este natural ca formulele care reprezintă aceeași corespondență să fie considerate echivalente.
+Vom introduce noțiunea de formule echivalente pornind de la faptul că fiecare formulă determină o corespondență sau o funcție între mulțimea tuturor tuplurilor de valori din formulele date și valorile logice de 0 și 1 sau adevăr și fals. Este natural ca formulele care reprezintă aceeași corespondență să fie considerate echivalente.
 
 ## Teorema 1
 
@@ -125,8 +125,8 @@ Dacă formula este identic falsă, atunci există $2^n$ forme normale conjunctiv
   4. Orice altă formă ce ar încerca să redea aceeași funcție logică ar trebui să conțină aceleași disjuncții (în altă ordine eventual), deci rezultă _unicitatea_.
 
 - **Existența a $2^n$ forme** pentru cazul identic fals (0 pentru _toate_ valuările) se vede din faptul că:  
-  $$ 0 \equiv (X_1 \land \overline{X_1}) \land (X_2 \land \overline{X_2}) \land \dots \land (X_n \land \overline{X_n}) $$  
-  Aici fiecare disjuncție elementară poate fi aleasă cu sau fără negare pentru fiecare variabilă, rezultând $2^n$ modalități de a scrie un produs de disjuncții elementare care _contrazice_ orice interpretare.
+  $$ 0 \equiv (X*1 \land \overline{X_1}) \land (X_2 \land \overline{X_2}) \land \dots \land (X_n \land \overline{X_n}) $$  
+  Aici fiecare disjuncție elementară poate fi aleasă cu sau fără negare pentru fiecare variabilă, rezultând $2^n$ modalități de a scrie un produs de disjuncții elementare care \_contrazice* orice interpretare.
 
 ## Teorema 3
 

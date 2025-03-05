@@ -51,3 +51,10 @@ const rows = computed(() => {
     </table>
   </div>
 </template>
+
+<style scoped>
+.highlightable tr:hover td {
+  background-color: oklch(0.901 0.058 230.902);
+  color: #000;
+}
+</style>
