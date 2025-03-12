@@ -11,3 +11,5 @@ Logica nu se interesează de conținutul afirmațiilor, doar dacă rezultă adev
 - [Functiile algebrei propozitionale](functiile-algebrei-propozitionale.md)
 - [Metoda analitică de definire a funcțiilor algebrei propoziționale](metoda-analitica.md)
 - [Realizarea funcțiilor algebrei propoziționale prin formule](realizarea-functiilor.md)
+- [Completitudine funcțională. Exemple de sisteme funcțional complete](completitudine-functionala.md)
+- [Mulțimi funcțional închise](multimi-functional-inchise.md)

@@ -10,26 +10,76 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'Pagina principală', link: '/' },
-      { text: 'Logica', link: '/logica' },
-      { text: 'Algoritmica Grafurilor', link: '/grafuri' },
+      {
+        text: 'Pagina principală',
+        link: '/',
+      },
+      {
+        text: 'Logica',
+        link: '/logica',
+      },
+      {
+        text: 'Algoritmica Grafurilor',
+        link: '/grafuri',
+      },
     ],
 
     sidebar: {
       '/logica/': [
-        { text: 'Algebra propozițiilor', link: '/logica/algebra-propozitiilor' },
-        { text: 'Forme normale', link: '/logica/forme-normale' },
-        { text: 'Forme normale perfecte', link: '/logica/forme-normale-perfecte' },
-        { text: 'Funcțiile algebrei propoziționale', link: '/logica/functiile-algebrei-propozitionale' },
-        { text: 'Constructor de tabele', link: '/logica/tabele' },
-        { text: 'Calculator de forma normală', link: '/logica/calculator-forma-normala' },
-        { text: 'Metoda analitică de definire a funcțiilor algebrei propoziționale', link: '/logica/metoda-analitica' },
-        { text: 'Realizarea funcțiilor algebrei propoziționale prin formule', link: '/logica/realizarea-functiilor' },
+        {
+          text: 'Algebra propozițiilor',
+          link: '/logica/algebra-propozitiilor',
+        },
+        {
+          text: 'Forme normale',
+          link: '/logica/forme-normale',
+        },
+        {
+          text: 'Forme normale perfecte',
+          link: '/logica/forme-normale-perfecte',
+        },
+        {
+          text: 'Funcțiile algebrei propoziționale',
+          link: '/logica/functiile-algebrei-propozitionale',
+        },
+        {
+          text: 'Constructor de tabele',
+          link: '/logica/tabele',
+        },
+        {
+          text: 'Calculator de forma normală',
+          link: '/logica/calculator-forma-normala',
+        },
+        {
+          text: 'Metoda analitică de definire a funcțiilor algebrei propoziționale',
+          link: '/logica/metoda-analitica',
+        },
+        {
+          text: 'Realizarea funcțiilor algebrei propoziționale prin formule',
+          link: '/logica/realizarea-functiilor',
+        },
+        {
+          text: 'Completitudine funcțională. Exemple de sisteme funcțional complete',
+          link: '/logica/completitudine-functionala',
+        },
+        {
+          text: 'Mulțimi funcțional închise',
+          link: '/logica/multimi-functional-inchise',
+        },
       ],
       '/grafuri/': [
-        { text: 'Editor de grafuri', link: '/grafuri/editor' },
-        { text: 'Noțiuni', link: '/grafuri/notiuni' },
-        { text: 'Tipuri de grafuri', link: '/grafuri/tipuri' },
+        {
+          text: 'Editor de grafuri',
+          link: '/grafuri/editor',
+        },
+        {
+          text: 'Noțiuni',
+          link: '/grafuri/notiuni',
+        },
+        {
+          text: 'Tipuri de grafuri',
+          link: '/grafuri/tipuri',
+        },
       ],
     },
 
@@ -89,5 +139,8 @@ export default defineConfig({
   },
   vite: {
     plugins: [tailwindcss() as any],
+    server: {
+      host: '0.0.0.0',
+    },
   },
 })

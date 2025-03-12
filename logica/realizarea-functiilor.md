@@ -382,7 +382,7 @@ $$
 f(\alpha_1, \alpha_2) = (\alpha_1 \lor \alpha_2) \;\land\; (\overline{\alpha_1} \lor \overline{\alpha_2}),
 $$
 
-## Teorema 3 – Completitudinea lui $P_1 = \{\land, \lor, \lnot\}$
+## Teorema 3 – Completitudinea lui $P_1 = \{\land, \lor, \lnot\}$ {#teorema-3}
 
 ### Enunț
 
