@@ -13,3 +13,7 @@ Logica nu se interesează de conținutul afirmațiilor, doar dacă rezultă adev
 - [Realizarea funcțiilor algebrei propoziționale prin formule](realizarea-functiilor.md)
 - [Completitudine funcțională. Exemple de sisteme funcțional complete](completitudine-functionala.md)
 - [Mulțimi funcțional închise](multimi-functional-inchise.md)
+- [Calculul propozițiilor](calculul-propozitiilor.md)
+- [Axiomele calculului propozițional](axiomele-calculului-propozitional.md)
+- [Teorema Deducției și Reguli Derivate](teorema-deductiei.md)
+- [Aplicațiile teoremei deducției. Regulile derivate de deducție.](aplicatiile-teoremei-deductiei.md)

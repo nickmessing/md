@@ -16,3 +16,13 @@ body {
     white-space: nowrap;
   }
 }
+
+@media all and (min-width: 0px) and (max-width: 900px) {
+  .katex-display > .katex > .katex-html {
+    overflow: auto;
+  }
+}
+
+.katex-display > .katex > .katex-html {
+  padding-left: 2rem;
+}

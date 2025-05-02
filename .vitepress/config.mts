@@ -66,6 +66,22 @@ export default defineConfig({
           text: 'Mulțimi funcțional închise',
           link: '/logica/multimi-functional-inchise',
         },
+        {
+          text: 'Calculul propozițiilor',
+          link: '/logica/calculul-propozitiilor',
+        },
+        {
+          text: 'Axiomele calculului propozițional',
+          link: '/logica/axiomele-calculului-propozitional',
+        },
+        {
+          text: 'Teorema Deducției',
+          link: '/logica/teorema-deductiei',
+        },
+        {
+          text: 'Aplicațiile teoremei deducției. Regulile derivate de deducție',
+          link: '/logica/aplicatiile-teoremei-deductiei',
+        },
       ],
       '/grafuri/': [
         {
@@ -134,6 +150,8 @@ export default defineConfig({
     config: md => {
       md.use(katex, {
         output: 'html',
+        trust: true,
+        leqno: true,
       })
     },
   },
