@@ -145,22 +145,22 @@ $$
   (B \rightarrow A) \rightarrow ((B \rightarrow B) \rightarrow (B \rightarrow (A \land B)))
   \\
   R.S.
-  (\href{/logica/axiomele-calculului-propozitional#axioma-i1}{I.1}, (14))
+  (\href{/logica/axiomele-calculului-propozitional#axioma-i1}{I.1}, (11))
   &\vdash
   A \rightarrow ((B \rightarrow B) \rightarrow (B \rightarrow (A \land B)))
   \\
   R.T.I.
-  ((15))
+  ((12))
   &\vdash
   (B \rightarrow B) \rightarrow (A \rightarrow (B \rightarrow (A \land B)))
   \\
   S_A^B
-  ((13))
+  ((10))
   &\vdash
   B \rightarrow B
   \\
   M.P.
-  ((17), (16))
+  ((14), (13))
   &\vdash
   A \rightarrow (B \rightarrow (A \land B))
   \\
