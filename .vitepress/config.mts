@@ -82,6 +82,38 @@ export default defineConfig({
           text: 'Aplicațiile teoremei deducției. Regulile derivate de deducție',
           link: '/logica/aplicatiile-teoremei-deductiei',
         },
+        {
+          text: 'Formule echivalente. Teorema echivalenței',
+          link: '/logica/formule-echivalente',
+        },
+        {
+          text: 'Necontradictia calculului propozițional',
+          link: '/logica/necontradictia-calculului-propozitional',
+        },
+        {
+          text: 'Completitudinea calculului propozițional',
+          link: '/logica/completitudinea-calculului-propozitional',
+        },
+        {
+          text: 'Logica predicatelor',
+          link: '/logica/logica-predicatelor',
+        },
+        {
+          text: 'Formule normale în logica predicatelor',
+          link: '/logica/formule-normale-predicate',
+        },
+        {
+          text: 'Formule realizabile',
+          link: '/logica/formule-realizabile',
+        },
+        {
+          text: 'Calculul predicatelor',
+          link: '/logica/calculul-predicatelor',
+        },
+        {
+          text: 'Teorema deducției în calculul predicatelor',
+          link: '/logica/teorema-deductiei-predicate',
+        },
       ],
       '/grafuri/': [
         {
