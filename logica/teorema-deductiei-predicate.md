@@ -16,9 +16,10 @@ cu condiția că aplicarea regulii de generalizare universală asupra unei varia
 
 ### Explicația restricției
 
-Restricția este necesară pentru a evita **generalizarea incorectă** asupra variabilelor care apar în ipoteze. 
+Restricția este necesară pentru a evita **generalizarea incorectă** asupra variabilelor care apar în ipoteze.
 
 **Exemplu problematic**:
+
 - Din $P(x) \vdash \forall x P(x)$ (prin R.G.U.)
 - Nu putem deduce $\vdash P(x) \rightarrow \forall x P(x)$
 
@@ -27,6 +28,7 @@ Restricția este necesară pentru a evita **generalizarea incorectă** asupra va
 ### Condiția precisă
 
 Teorema deducției se aplică doar dacă în demonstrația lui $B$ din $\Gamma \cup \{A\}$:
+
 - Nu se aplică regula generalizării universale asupra unei variabile care apare liberă în $A$
 - Sau asupra unei variabile care apare liberă în formulele din $\Gamma$
 
@@ -43,9 +45,11 @@ Teorema deducției se aplică doar dacă în demonstrația lui $B$ din $\Gamma \
 **Cazuri suplimentare**:
 
 1. **Axioma Q1**: $\forall x C(x) \rightarrow C(t)$
+
    - Se demonstrează $\Gamma \vdash A \rightarrow (\forall x C(x) \rightarrow C(t))$
 
 2. **Axioma Q2**: $C \rightarrow \forall x C$ (unde $x$ nu apare liberă în $C$)
+
    - Se demonstrează $\Gamma \vdash A \rightarrow (C \rightarrow \forall x C)$
 
 3. **Regula generalizării universale**: $\frac{C(x)}{\forall x C(x)}$
@@ -58,6 +62,7 @@ Teorema deducției se aplică doar dacă în demonstrația lui $B$ din $\Gamma \
 **De demonstrat**: $\Gamma \cup \{A\} \vdash B$
 
 **Demonstrația**:
+
 1. $\Gamma \vdash A \rightarrow B$ (ipoteză)
 2. $A$ (ipoteză adăugată în $\Gamma \cup \{A\}$)
 3. $B$ (prin Modus Ponens din 1 și 2)
@@ -81,6 +86,7 @@ Teorema deducției se aplică doar dacă în demonstrația lui $B$ din $\Gamma \
    - Demonstrăm $R(x)$
 
 **Demonstrația detaliată**:
+
 $$
 \begin{align}
 &\forall x (P(x) \rightarrow Q(x)) \land \forall x (Q(x) \rightarrow R(x)) \tag{ipoteză}\\
@@ -106,6 +112,7 @@ $$
 2. Demonstrăm: $\overline{\forall x \overline{P(x)}}$
 
 **Demonstrația**:
+
 $$
 \begin{align}
 &\exists x P(x) \tag{ipoteză}\\
@@ -167,6 +174,7 @@ Teorema deducției este crucială pentru demonstrarea **teoremei de completitudi
 **Teorema**: În teoria mulțimilor, $\vdash \forall x \forall y ((x \subseteq y \land y \subseteq x) \rightarrow x = y)$
 
 **Demonstrația folosind teorema deducției**:
+
 1. Presupunem $x \subseteq y \land y \subseteq x$
 2. Demonstrăm $x = y$ folosind axioma extensionalității
 3. Aplicăm teorema deducției pentru a obține rezultatul final

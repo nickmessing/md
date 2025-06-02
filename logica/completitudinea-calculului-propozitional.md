@@ -17,6 +17,7 @@ $$
 $$
 
 unde:
+
 - $A_a$ reprezintă formula identic adevărată (tautologia)
 - $A_f$ reprezintă formula identic falsă (contradicția)
 
@@ -101,60 +102,75 @@ Una din consecințele acestei teoreme ne dă posibilitatea de a transfera toate 
 Din teorema completitudinii rezultă că următoarele formule pot fi deduse în calculul propozițional:
 
 ### Proprietăți comutative
+
 $$
 \vdash (U \land V) \leftrightarrow (V \land U)
 $$
+
 $$
 \vdash (U \lor V) \leftrightarrow (V \lor U)
 $$
 
 ### Echivalența implicației
+
 $$
 \vdash (U \rightarrow V) \leftrightarrow (\overline{U} \lor V)
 $$
 
 ### Legile lui De Morgan
+
 $$
 \vdash \overline{(U \land V)} \leftrightarrow (\overline{U} \lor \overline{V})
 $$
+
 $$
 \vdash \overline{(U \lor V)} \leftrightarrow (\overline{U} \land \overline{V})
 $$
 
 ### Proprietăți cu constante logice
+
 $$
 \vdash (U \land A_a) \leftrightarrow U
 $$
+
 $$
 \vdash (U \lor A_a) \leftrightarrow A_a
 $$
+
 $$
 \vdash (U \land A_f) \leftrightarrow A_f
 $$
+
 $$
 \vdash (U \lor A_f) \leftrightarrow U
 $$
 
 ### Proprietăți de idempotență
+
 $$
 \vdash (U \land U) \leftrightarrow U
 $$
+
 $$
 \vdash (U \lor U) \leftrightarrow U
 $$
 
 ### Legea contradicției și a terțului exclus
+
 $$
 \vdash (U \land \overline{U}) \leftrightarrow A_f
 $$
+
 $$
 \vdash (U \lor \overline{U}) \leftrightarrow A_a
 $$
 
 ### Legile distributive
+
 $$
 \vdash (U \land (V \lor W)) \leftrightarrow ((U \land V) \lor (U \land W))
 $$
+
 $$
 \vdash (U \lor (V \land W)) \leftrightarrow ((U \lor V) \land (U \lor W))
 $$

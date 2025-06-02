@@ -128,6 +128,10 @@ export default defineConfig({
           text: 'Tipuri de grafuri',
           link: '/grafuri/tipuri',
         },
+        {
+          text: 'Cheat Sheet',
+          link: '/grafuri/cs',
+        },
       ],
     },
 

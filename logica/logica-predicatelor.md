@@ -11,6 +11,7 @@ Logica propozițională se limitează la analiza relațiilor dintre propoziții 
 Fie că $\mathfrak{M}$ este o mulțime de obiecte, iar $a, b, c, d \in \mathfrak{M}$.
 
 Afirmațiile despre aceste obiecte le vom nota prin:
+
 - $P(a)$ = "$a$ este număr prim"
 - $Q(b, c)$ = "$b \leq c$"
 - $R(x_1, x_2, \ldots, x_n)$ = "$x_1 + x_2 + \ldots + x_n = 0$"
@@ -40,6 +41,7 @@ Cu ajutorul predicatelor putem exprima diferite relații dintre obiectele acestu
 **Definiție**: Literele latine majuscule $A, B, C, \ldots$ precum și simbolurile de predicate $P(x)$, $K(a, b)$ le vom numi în continuare **formule elementare** din logica predicatelor.
 
 **Observații importante**:
+
 - Simbolurile obiectelor din $\mathfrak{M}$ nu sunt formule
 - Formulele elementare cât și funcțiile pot primi doar 0 sau 1
 - Putem introduce operațiile logice între formule: $\land$, $\lor$, $\rightarrow$, $\overline{\phantom{A}}$
@@ -80,6 +82,7 @@ $$
 $$
 \overline{\forall x F(x)} \equiv \exists x \overline{F(x)}
 $$
+
 $$
 \overline{\exists x F(x)} \equiv \forall x \overline{F(x)}
 $$
@@ -91,7 +94,8 @@ $$
 - În $\forall x F(x)$ - $x$ este **variabilă de legătură**
 - În $\forall y F(x, y)$ - $x$ este **variabilă liberă**, $y$ este **variabilă de legătură**
 
-**Definiție**: 
+**Definiție**:
+
 - **Variabila care nu este legată de cuantificator** se numește **liberă**
 - **Variabila care este legată** se numește **de legătură**
 
@@ -102,15 +106,17 @@ $$
 1. **Baza**: Simbolul unei propoziții și simbolul unui predicat sunt formule și le vom numi **formule elementare**.
 
 2. **Operații logice**: Dacă $U$ și $V$ sunt formule, atunci formule sunt de forma:
+
    - $U \land V$
-   - $U \lor V$ 
+   - $U \lor V$
    - $U \rightarrow V$
    - $\overline{U}$
 
 3. **Cuantificare**: Dacă $U(x)$ este formulă în care $x$ este variabilă liberă, atunci:
+
    - $\forall x U(x)$
    - $\exists x U(x)$
-   
+
    sunt formule (și nu mai sunt formule elementare).
 
 ## Echivalența în logica predicatelor
@@ -132,6 +138,7 @@ $$
 $$
 \overline{\forall x U(x)} \equiv \exists x \overline{U(x)}
 $$
+
 $$
 \overline{\exists x U(x)} \equiv \forall x \overline{U(x)}
 $$
@@ -157,15 +164,19 @@ Din cele spuse mai sus rezultă că pentru orice formulă din logica predicatelo
 ## Exemple practice
 
 ### Exemplu 1: Transformarea negației
+
 $$
 \overline{\forall x (P(x) \rightarrow Q(x))} \equiv \exists x \overline{(P(x) \rightarrow Q(x))}
 $$
+
 $$
 \equiv \exists x \overline{(\overline{P(x)} \lor Q(x))} \equiv \exists x (P(x) \land \overline{Q(x)})
 $$
 
 ### Exemplu 2: Formula cu variabile mixte
+
 În formula $\forall x (P(x) \lor \exists y R(x,y))$:
+
 - $x$ este variabilă de legătură pentru $\forall$
 - $y$ este variabilă de legătură pentru $\exists$
 - Ambele variabile sunt legate în contexte diferite

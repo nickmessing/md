@@ -9,11 +9,13 @@ Conform celor demonstrate în [logica predicatelor](/logica/logica-predicatelor)
 **Definiție**: Forma prenexă o vom numi **normală** dacă ea nu conține cuantificatori sau, dacă îi conține, atunci toți cuantificatorii stau în fața formulei, adică ei leagă toate celelalte operații.
 
 **Forma generală**: O formulă normală are forma:
+
 $$
 Q_1 x_1 Q_2 x_2 \ldots Q_n x_n \, U(x_1, x_2, \ldots, x_n)
 $$
 
 unde:
+
 - $Q_i \in \{\forall, \exists\}$ pentru $i = 1, 2, \ldots, n$
 - $U(x_1, x_2, \ldots, x_n)$ este o formulă fără cuantificatori (construită doar cu $\land$, $\lor$, $\overline{\phantom{A}}$ aplicat formulelor elementare)
 
@@ -34,6 +36,7 @@ Demonstrația se bazează pe următoarele transformări:
 **Definiție**: Formula normală se numește **formulă normală Skolem** dacă toți cuantificatorii de existență stau în fața tuturor cuantificatorilor de generalizare.
 
 **Forma generală Skolem**:
+
 $$
 \exists y_1 \exists y_2 \ldots \exists y_m \forall x_1 \forall x_2 \ldots \forall x_n \, U(y_1, \ldots, y_m, x_1, \ldots, x_n)
 $$
@@ -41,11 +44,13 @@ $$
 ### Exemplu de transformare Skolem
 
 Considerăm formula:
+
 $$
 \forall x \exists y \forall z \, U(x,y,z)
 $$
 
 Pentru a o transforma în forma Skolem, trebuie să aducem cuantificatorii de existență în față:
+
 $$
 \exists y \forall x \forall z \, U'(x, y, z)
 $$
@@ -56,7 +61,8 @@ $$
 
 ### 1. Forma normală disjunctivă în logica predicatelor
 
-**Structura**: 
+**Structura**:
+
 $$
 Q_1 x_1 \ldots Q_n x_n \, (D_1 \lor D_2 \lor \ldots \lor D_k)
 $$
@@ -66,6 +72,7 @@ unde fiecare $D_i$ este o conjuncție de literali (formule elementare sau negaț
 ### 2. Forma normală conjunctivă în logica predicatelor
 
 **Structura**:
+
 $$
 Q_1 x_1 \ldots Q_n x_n \, (C_1 \land C_2 \land \ldots \land C_k)
 $$
@@ -77,22 +84,26 @@ unde fiecare $C_i$ este o disjuncție de literali.
 ### Pasul 1: Eliminarea conectivelor
 
 Înlocuim toate aparițiile de $\rightarrow$ și $\leftrightarrow$:
+
 - $A \rightarrow B \equiv \overline{A} \lor B$
 - $A \leftrightarrow B \equiv (A \rightarrow B) \land (B \rightarrow A)$
 
 ### Pasul 2: Deplasarea negațiilor
 
 Aplicăm echivalențele cuantificatorilor:
+
 - $\overline{\forall x P(x)} \equiv \exists x \overline{P(x)}$
 - $\overline{\exists x P(x)} \equiv \forall x \overline{P(x)}$
 
 Aplicăm legile De Morgan:
+
 - $\overline{A \land B} \equiv \overline{A} \lor \overline{B}$
 - $\overline{A \lor B} \equiv \overline{A} \land \overline{B}$
 
 ### Pasul 3: Standardizarea variabilelor
 
 Redenumim variabilele pentru a evita coliziunile:
+
 - Variabile de legătură diferite trebuie să aibă nume diferite
 - Variabilele libere nu trebuie să coincidă cu variabilele de legătură
 
@@ -103,26 +114,31 @@ Aducem toți cuantificatorii în fața formulei, respectând dependințele.
 ## Exemplu complet de transformare
 
 **Formula inițială**:
+
 $$
 \forall x (P(x) \rightarrow \exists y (Q(x,y) \land \overline{\forall z R(x,z)}))
 $$
 
 **Pasul 1 - Eliminarea implicației**:
+
 $$
 \forall x (\overline{P(x)} \lor \exists y (Q(x,y) \land \overline{\forall z R(x,z)}))
 $$
 
 **Pasul 2 - Deplasarea negației**:
+
 $$
 \forall x (\overline{P(x)} \lor \exists y (Q(x,y) \land \exists z \overline{R(x,z)}))
 $$
 
 **Pasul 3 - Standardizarea (redenumirea lui $z$ în $w$)**:
+
 $$
 \forall x (\overline{P(x)} \lor \exists y (Q(x,y) \land \exists w \overline{R(x,w)}))
 $$
 
 **Pasul 4 - Extragerea cuantificatorilor**:
+
 $$
 \forall x \exists y \exists w (\overline{P(x)} \lor (Q(x,y) \land \overline{R(x,w)}))
 $$
@@ -130,11 +146,13 @@ $$
 ## Exemplu de verificare a realizabilității
 
 **Întrebare**: Este realizabilă formula?
+
 $$
 \exists x \forall y (Q(x,y) \land \overline{Q(x,y)})
 $$
 
-**Analiză**: 
+**Analiză**:
+
 - Pentru ca formula să fie adevărată, trebuie să existe un $x$ astfel încât pentru orice $y$, să avem simultan $Q(x,y)$ și $\overline{Q(x,y)}$
 - Aceasta este imposibil, deoarece o propoziție nu poate fi simultan adevărată și falsă
 - **Concluzie**: Formula este **nerealizabilă** (contradicție)

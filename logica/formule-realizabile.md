@@ -19,6 +19,7 @@ Rezolvând această problemă, noi astfel am putea răspunde la întrebarea: "Es
 ### Diferențe între logica propozițională și logica predicatelor
 
 1. **Logica propozițională**: Problema realizabilității nu întâmpină nicio greutate
+
    - Există algoritmi efectivi (tabele de adevăr)
    - Problema este **decidabilă**
 
@@ -33,6 +34,7 @@ Rezolvând această problemă, noi astfel am putea răspunde la întrebarea: "Es
 Pentru domenii finite $\mathfrak{M} = \{a_1, a_2, \ldots, a_n\}$, problema devine mai simplă:
 
 - Cuantificatorii se pot "dezvolta":
+
   - $\forall x P(x) \equiv P(a_1) \land P(a_2) \land \ldots \land P(a_n)$
   - $\exists x P(x) \equiv P(a_1) \lor P(a_2) \lor \ldots \lor P(a_n)$
 
@@ -42,6 +44,7 @@ Pentru domenii finite $\mathfrak{M} = \{a_1, a_2, \ldots, a_n\}$, problema devin
 ### 2. Realizabilitate pe domenii infinite
 
 Pentru domenii infinite, situația se complică:
+
 - Nu putem "dezvolta" cuantificatorii
 - Problema devine **nedecidabilă** în general
 
@@ -51,7 +54,8 @@ Pentru domenii infinite, situația se complică:
 
 **Formula**: $\exists x P(x)$
 
-**Analiză**: 
+**Analiză**:
+
 - Pe orice domeniu negoI $\mathfrak{M}$, dacă definim predicatul $P$ astfel încât $P(a) = 1$ pentru cel puțin un element $a \in \mathfrak{M}$, formula devine adevărată
 - **Concluzie**: Formula este **realizabilă**
 
@@ -60,6 +64,7 @@ Pentru domenii infinite, situația se complică:
 **Formula**: $\exists x \forall y (Q(x,y) \land \overline{Q(x,y)})$
 
 **Analiză**:
+
 - Pentru orice alegere a obiectelor și predicatului $Q$, expresia $Q(x,y) \land \overline{Q(x,y)}$ este mereu falsă
 - Prin urmare, $\forall y (Q(x,y) \land \overline{Q(x,y)})$ este mereu falsă
 - Deci $\exists x \forall y (Q(x,y) \land \overline{Q(x,y)})$ este mereu falsă
@@ -70,6 +75,7 @@ Pentru domenii infinite, situația se complică:
 **Formula**: $\forall x \exists y (x \neq y)$
 
 **Analiză**:
+
 - Pe domeniul $\mathfrak{M} = \{a\}$ (un element): Falsă, pentru $x = a$ nu există $y \neq a$
 - Pe domeniul $\mathfrak{M} = \{a, b\}$ (două elemente): Adevărată, pentru orice $x$ există $y \neq x$
 - **Concluzie**: Realizabilitatea **depinde de domeniu**
@@ -81,18 +87,21 @@ Deși problema generală este nedecidabilă, există metode parțiale:
 ### 1. Metoda modelelor finite
 
 Pentru formule simple, verificăm pe domenii finite mici:
+
 - Dacă găsim un model finit, formula este realizabilă
 - Dacă nu găsim, nu putem concluziona nimic definitiv
 
 ### 2. Metoda contradictiilor
 
 Căutăm contradicții evidente:
+
 - Dacă formula conține subformule de forma $P \land \overline{P}$, este nerealizabilă
 - Aplicăm transformări logice pentru a identifica contradicții
 
 ### 3. Analiza structurală
 
 Analizăm structura cuantificatorilor:
+
 - Formule cu alternanțe complexe de cuantificatori sunt mai greu de analizat
 - Formule cu cuantificatori doar de un tip sunt mai simple
 
@@ -103,18 +112,21 @@ Există clase speciale de formule pentru care problema este decidabilă:
 ### 1. Formule monadice
 
 Formule care conțin doar predicate cu un argument:
+
 - $\forall x (P(x) \rightarrow Q(x))$
 - Problema este **decidabilă**
 
 ### 2. Formule fără funcții
 
 Formule care nu conțin simboluri de funcții:
+
 - Anumite subclase sunt decidabile
 - Depend de structura cuantificatorilor
 
 ### 3. Formule Horn
 
 Formule cu structură specifică în logica predicatelor:
+
 - Utilizate în programarea logică
 - Satisfiabilitatea este decidabilă
 
